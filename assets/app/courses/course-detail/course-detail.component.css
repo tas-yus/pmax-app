@@ -1,0 +1,24 @@
+.desc {
+  padding-left: 20px;
+  line-height: 1.75;
+}
+
+.title {
+  color: #1c64d8;
+}
+
+#thai-description {
+  font-family: "Athiti";
+  font-weight: 700;
+}
+
+.jumbotron {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+@media screen and (max-width: 768px) {
+  .aside {
+    position: relative;
+  }
+}

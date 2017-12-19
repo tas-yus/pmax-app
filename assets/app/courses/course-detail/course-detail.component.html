@@ -1,0 +1,11 @@
+<div class="jumbotron">
+  <div class="container">
+    <h2 *ngIf="course" class="mb-4 title">{{ course.title }}</h2>
+    <h5 *ngIf="course" class="desc" id="thai-description">{{ course.description }}</h5>
+  </div>
+</div>
+<div class="col-md-4 pull-right sticky-top aside">
+  <course-aside *ngIf="course" [course]="course"></course-aside>
+</div>
+<part-list *ngIf="course" [parts]="course.parts"></part-list>
+<course-overview *ngIf="course" [parts]="course.parts"></course-overview>

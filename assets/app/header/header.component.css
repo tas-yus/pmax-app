@@ -1,0 +1,9 @@
+.navbar-brand {
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.navbar-brand span {
+  font-weight: 500;
+  color: #0046b7;
+}

@@ -1,0 +1,27 @@
+<h3 mb-2>Overview</h3>
+<div class="container pl-4 pr-4 pt-2 pb-2">
+  <div class="col-md-8">
+    <div role="tablist">
+      <div *ngFor="let part of parts; let i = index" class="card mb-2">
+        <div class="card-header" role="tab" id="heading{{i}}">
+          <h5 class="mb-0">
+            <a data-toggle="collapse" href="#collapse{{i}}" aria-expanded="true" aria-controls="collapseOne">
+              {{part.title}}
+            </a>
+          </h5>
+        </div>
+        <div id="collapse{{i}}" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+          <div *ngFor="let video of part.videos" class="card-body d-flex justify-content-between align-content-center py-3">
+            <div>
+              {{video.title}}
+            </div>
+            <div class="d-flex">
+              <a *ngIf="video.previewAllowed" class="mr-4" routerLink="">Preview</a>
+              <div>{{video.duration}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

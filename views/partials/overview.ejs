@@ -1,0 +1,39 @@
+<h3>Course Overview</h3>
+<div class="panel-group" role="tablist" aria-multiselectable="true">
+  <% var ctr = 0; %>
+    <% parts.forEach((part) => { %>
+        <% ctr++; %>
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="heading<%= ctr %>">
+            <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" href="#collapse<%= ctr %>" aria-expanded="false" aria-controls="collapse<%= ctr %>">
+                <i class="fa fa-plus"></i><span><%= part.title %></span>
+                <span class="part-duration">
+                  <%= part.duration %>
+                </span>
+                <span class="part-length">
+                  <%= part.videos.length %> Lectures
+                </span>
+              </a>
+            </h4>
+          </div>
+          <div id="collapse<%= ctr %>" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading<%= ctr %>">
+            <% var count = 0; %>
+            <% part.videos.forEach((vid) => { %>
+              <% count++ %>
+              <div class="panel-body">
+                <p style="float: left"> <%= count %>. <%= vid.title %> </p>
+                <span class="part-duration">
+                  <%= vid.duration %>
+                </span>
+                <% if(vid.previewAllowed) { %>
+                  <span class="part-length">
+                    <a href="#" style="float: right">Preview</a>
+                  </span>
+                <% } %>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+    <% }); %>
+</div>

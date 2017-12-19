@@ -1,0 +1,14 @@
+<h3>All Parts</h3>
+<div class="container pl-4 pr-4 pt-2 pb-2">
+  <div *ngFor="let part of parts">
+    <div class="col-md-8 mb-3">
+      <div class="card">
+        <img class="card-img-top" src="/assets/images/{{part.image}}" alt="{{part.title}}">
+        <div class="card-body">
+          <h4 class="card-title text-dark">{{part.title}}</h4>
+          <p class="card-text text-dark">{{part.description}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
