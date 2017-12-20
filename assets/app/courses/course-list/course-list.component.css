@@ -28,3 +28,7 @@ a {
   transition: all 0.2s;
   opacity: 0.75
 }
+
+.small-text {
+  font-size: 15px;
+}

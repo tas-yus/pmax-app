@@ -1,0 +1,23 @@
+<ng-template [ngIf]="course">
+  <div class="jumbotron">
+    <div class="container d-flex justify-content-between">
+      <div class="col-sm-6">
+        <iframe class="intro-video" [src]='sanitizer.bypassSecurityTrustResourceUrl(course.video)' frameborder="0" allowfullscreen></iframe>
+      </div>
+      <div class="col-sm-6">
+        <h2>Learn {{course.title}}</h2>
+        <a href="#" class="btn btn-lg btn-primary my-3">
+          {{course.title}} Completed!
+        </a>
+        <p class="progress-caption"><span id="num-finished-videos">0</span> of {{course.numVideos}} items complete</p>
+        <div class="progress">
+          <div class="progress-bar" role="progressbar" aria-valuenow="70"
+          aria-valuemin="0" aria-valuemax="100" style="width:70%">
+            <span class="sr-only">70% Complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <course-overview *ngIf="course" [parts]="course.parts"></course-overview>
+</ng-template>

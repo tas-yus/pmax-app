@@ -4,3 +4,4 @@
 /public/js/
 npm-debug.log
 /public/assets/videos/test.mp4
+.DS_Store

@@ -282,31 +282,31 @@ router.put("/:courseCode", middleware.isLoggedIn, middleware.isAdmin, upload.sin
 });
 
 // LEARN COURSE
-router.get("/:courseCode/learn", middleware.isLoggedIn, middleware.canAccessLearn, async (req, res) => {
-  try {
-    var course = await Course.findOne({code: req.params.courseCode}).populate({path: "parts", select: "code title videos"}).exec();
-    if (!course) return res.redirect("/courses");
-  } catch(err) {
-    return console.log(err);
-  }
-  try {
-    var parts = await Video.populate(course.parts, {path: "videos"});
-  } catch(err) {
-    return console.log(err);
-  }
-  var checkPartOwnership = method.checkPartOwnership;
-  var getCourseInArrayById = method.getCourseInArrayById;
-  var getVideoInArrayById = method.getVideoInArrayById;
-  var isFinished = method.isFinished;
-  var createCode = method.createCode;
-  if (req.user.isAdmin) {
-    res.render("courses/learn", {course, parts, checkPartOwnership, isFinished, createCode});
-  } else {
-    var numFinishedVideos = method.getCourseInArrayById(req.user.courses, course._id.toString()).numFinishedVideos;
-    res.render("courses/learn", {course, checkPartOwnership, isFinished, createCode,
-      numFinishedVideos, getCourseInArrayById, getVideoInArrayById});
-  }
-});
+// router.get("/:courseCode/learn", middleware.isLoggedIn, middleware.canAccessLearn, async (req, res) => {
+//   try {
+//     var course = await Course.findOne({code: req.params.courseCode}).populate({path: "parts", select: "code title videos"}).exec();
+//     if (!course) return res.redirect("/courses");
+//   } catch(err) {
+//     return console.log(err);
+//   }
+//   try {
+//     var parts = await Video.populate(course.parts, {path: "videos"});
+//   } catch(err) {
+//     return console.log(err);
+//   }
+//   var checkPartOwnership = method.checkPartOwnership;
+//   var getCourseInArrayById = method.getCourseInArrayById;
+//   var getVideoInArrayById = method.getVideoInArrayById;
+//   var isFinished = method.isFinished;
+//   var createCode = method.createCode;
+//   if (req.user.isAdmin) {
+//     res.render("courses/learn", {course, parts, checkPartOwnership, isFinished, createCode});
+//   } else {
+//     var numFinishedVideos = method.getCourseInArrayById(req.user.courses, course._id.toString()).numFinishedVideos;
+//     res.render("courses/learn", {course, checkPartOwnership, isFinished, createCode,
+//       numFinishedVideos, getCourseInArrayById, getVideoInArrayById});
+//   }
+// });
 
 //BUY
 router.get("/:courseCode/buy", middleware.isLoggedIn, middleware.canBuy, (req, res) => {

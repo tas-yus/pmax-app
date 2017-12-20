@@ -13,8 +13,15 @@
 
 </head>
 <body>
+
 <app-root>Loading...</app-root>
 
+<script>
+  const currentUser = <%- JSON.stringify(user) %>;
+  if (currentUser) {
+    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+  }
+</script>
 <script src="/js/app/bundle.js"></script>
 </body>
 </html>

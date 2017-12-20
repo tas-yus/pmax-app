@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="col-lg-4 col-sm-6 mb-2" *ngFor="let course of courses">
+  <div class="col-xl-3 col-lg-4 col-sm-6 mb-2" *ngFor="let course of courses">
     <a routerLink="/courses/{{course.code}}" class="card">
       <img class="card-img-top" src="/assets/images/{{course.image}}" alt="{{course.title}}">
       <div class="card-body">
         <h4 class="card-title text-dark">{{course.title}}</h4>
-        <p class="card-text text-dark">{{course.description}}</p>
-        <p class="card-text text-dark">{{course.price}} bahts</p>
+        <p class="card-text text-dark small-text">{{course.description}}</p>
+        <h5 class="card-text text-primary text-right">{{course.price}} bahts</h5>
       </div>
     </a>
   </div>
