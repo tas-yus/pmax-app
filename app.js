@@ -39,6 +39,7 @@ var questionApiRoutes = require("./routes/apiRoutes/questions");
 var answerApiRoutes = require("./routes/apiRoutes/answers");
 var userApiRoutes = require("./routes/apiRoutes/users");
 var imageApiRoutes = require("./routes/apiRoutes/images");
+var videoApiRoutes = require("./routes/apiRoutes/videos");
 // ========================
 
 mongoose.Promise = Promise;
@@ -108,13 +109,14 @@ app.use(async function(req, res, next) {
 // app.use("/courses/:courseCode/parts/:partCode/videos/:vidCode/resources", resourceRoutes);
 // app.use("/courses/:courseCode", questionRoutes);
 // app.use("/courses/:courseCode/parts/:partCode/videos/:vidCode/questions/:questionCode/answers", answerRoutes);
-app.use("/api/", indexApiRoutes);
+app.use("/api", indexApiRoutes);
 app.use("/api/courses", courseApiRoutes);
 app.use("/api/courses/:courseCode/parts", partApiRoutes);
 app.use("/api/courses/:courseCode", questionApiRoutes);
 app.use("/api/courses/:courseCode/parts/:partCode/videos/:videoCode/questions/:questionCode/answers", answerApiRoutes);
 app.use("/api/users", userApiRoutes);
 app.use("/api/images", imageApiRoutes);
+app.use("/api/courses/:courseCode/parts/:partCode/videos", videoApiRoutes);
 // ========================
 
 // AGENDA

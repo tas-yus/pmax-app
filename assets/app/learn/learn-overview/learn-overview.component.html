@@ -1,0 +1,27 @@
+<div class="container pl-4 pr-4 pt-2 pb-2">
+  <div role="tablist">
+    <div *ngFor="let part of course.parts; let i = index" class="card mb-2">
+      <div class="card-header d-flex justify-content-between py-3" role="tab" id="heading{{i}}">
+        <h5 class="mb-0">
+          <a data-toggle="collapse" href="#collapse{{i}}" aria-expanded="true" aria-controls="collapseOne">
+            {{part.title}}
+          </a>
+        </h5>
+        <p class="m-0"> 0 / {{part.videos.length}} </p>
+      </div>
+      <div id="collapse{{i}}" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
+        <a *ngFor="let video of part.videos"
+        class="card-body d-flex justify-content-between align-content-center py-3 text-dark video-item"
+        routerLink="/courses/{{course.code}}/parts/{{part.code}}/videos/{{video.code}}">
+          <div class="video-title">
+            {{video.title}}
+          </div>
+          <div class="d-flex justify-content-between video-duration">
+            <div class="pr-4">{{video.duration}}</div>
+            <div><i class="fa fa-circle-o text-primary" (click)="onUpdateVidStatus()" aria-hidden="true"></i></div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

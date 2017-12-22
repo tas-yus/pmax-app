@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import { AuthService} from '../auth/auth.service';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -11,18 +12,18 @@ import { AuthService } from '../auth/auth.service';
 export class HeaderComponent implements OnInit {
 
   currentUser;
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private cdRef:ChangeDetectorRef) {}
 
   ngOnInit() {
-    if (sessionStorage.getItem('currentUser')) {
-      this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
-    }
+
   }
 
   ngAfterViewChecked() {
     if (sessionStorage.getItem('currentUser')) {
       this.currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+      this.cdRef.detectChanges();
     }
+
   }
 
   onLogoutUser() {

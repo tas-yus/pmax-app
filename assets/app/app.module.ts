@@ -15,6 +15,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { VideoComponent } from './videos/video.component';
 import { LearnComponent } from './learn/learn.component';
+import { LearnOverviewComponent } from './learn/learn-overview/learn-overview.component';
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
@@ -31,7 +32,8 @@ import { AuthGuard } from './auth/auth-guard.service';
     LoginComponent,
     RegisterComponent,
     VideoComponent,
-    LearnComponent
+    LearnComponent,
+    LearnOverviewComponent
   ],
   imports: [
     BrowserModule,
@@ -44,5 +46,5 @@ import { AuthGuard } from './auth/auth-guard.service';
 })
 
 export class AppModule {
-  
+
 }

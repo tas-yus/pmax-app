@@ -10,18 +10,11 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Athiti" rel="stylesheet">
-
 </head>
 <body>
 
 <app-root>Loading...</app-root>
 
-<script>
-  const currentUser = <%- JSON.stringify(user) %>;
-  if (currentUser) {
-    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
-  }
-</script>
 <script src="/js/app/bundle.js"></script>
 </body>
 </html>

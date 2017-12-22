@@ -188,7 +188,7 @@ var videos = [
         title: "[Ar] using Noble gas",
         partTitle: "Atom",
         courseTitle: "Chem Olympic 1",
-        path: "small.mp4",
+        path: "test.mp4",
         duration: "20:12",
         order: 5
     },

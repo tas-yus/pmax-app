@@ -27,4 +27,12 @@ router.post("/logout", function(req, res){
   });
 });
 
+// SESSION
+router.get("/session", function(req, res){
+  if (req.user) {
+    return res.status(200).send(req.user);
+  }
+  res.status(400).send({message: "Not logged in"});
+});
+
 module.exports = router;
