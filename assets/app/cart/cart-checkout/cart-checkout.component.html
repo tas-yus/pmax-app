@@ -1,0 +1,54 @@
+<div class="container my-4">
+  <div class="jumbotron p-4">
+    <h1>Check Out</h1>
+    <h6 class="mt-3"><a class="shop-link" routerLink="/cart">Shopping Cart <i class="fa fa-shopping-cart"></i></a></h6>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <p>Your Item (1)</p>
+      <hr>
+      <div class="row">
+        <div class="col-md-5">
+          <img style="width:100%" src="/assets/images/chem1.jpg" alt="">
+        </div>
+        <div class="desc col-md-7 m-0 pt-3">
+          <p>Chem Olympic 1</p>
+          <p class="font-weight-bold text-danger">500 Bahts</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="d-flex justify-content-between align-content-center">
+        <h3>Total: 500 Bahts</h3>
+        <a style="cursor:pointer;" *ngIf="!newCard" (click)="newCard = !newCard">Add New Card</a>
+        <a style="cursor:pointer;" *ngIf="newCard" (click)="newCard = !newCard">Cancel</a>
+      </div>
+      <div *ngIf="newCard" class="new-credit card my-2">
+        <div class="card-body">
+          <input type="radio" name="payment" id="new-credit">
+          New Credit
+          <hr>
+          <a class="btn btn-warning">Complete Payment</a>
+        </div>
+      </div>
+      <div class="credit card my-2">
+        <div class="card-body">
+          <input type="radio" name="payment" id="credit">
+          VISA
+          <i class="fa fa-credit-card-alt ml-2" aria-hidden="true"></i>
+          <hr>
+          <a class="btn btn-warning">Complete Payment</a>
+        </div>
+      </div>
+      <div class="paypal card my-2">
+        <div class="card-body">
+          <input type="radio" name="payment" id="paypal">
+          PayPal
+          <i class="fa fa-paypal ml-2" aria-hidden="true"></i>
+          <hr>
+          <a class="btn btn-warning">Pay Now With Paypal</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

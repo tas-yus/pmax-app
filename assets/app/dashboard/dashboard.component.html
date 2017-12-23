@@ -1,0 +1,31 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-3 col-sm-5 container nav-tab">
+      <div class="card-body sticky-top">
+        <div class="d-flex justify-content-center">
+          <div class="avatar"></div>
+        </div>
+        <h5 class="mt-2 text-center">Tas Yusoontorn</h5>
+        <hr>
+        <ul class="pl-0 text-center" style="list-style:none;">
+          <li><a href="">Edit Profile</a></li>
+          <li><a href="">Public Profile</a></li>
+          <li><a href="">Account Info</a></li>
+          <li><a href="">Purchase History</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="card-body col-md-9 container">
+      <div class="courses">
+        <h5>Your Courses
+          <i class="fa fa-minus ml-2" *ngIf="showCourse" (click)="showCourse = !showCourse" aria-hidden="true"></i>
+          <i class="fa fa-plus ml-2" *ngIf="!showCourse" (click)="showCourse = !showCourse" aria-hidden="true"></i>
+        </h5>
+        <course-list *ngIf="showCourse"></course-list>
+      </div>
+      <div class="purchase">
+        <h5>Purchase History <i class="fa fa-minus ml-2" aria-hidden="true"></i></h5>
+      </div>
+    </div>
+  </div>
+</div>

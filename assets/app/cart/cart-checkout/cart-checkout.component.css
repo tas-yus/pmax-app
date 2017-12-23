@@ -1,0 +1,14 @@
+.desc {
+  font-size: 13px;
+  line-height: 0;
+}
+
+.credit:hover, .paypal:hover {
+  background-color: #f2f2f2;
+  -webkit-transition: all .2s;
+  transition: all 0.2s;
+}
+
+.shop-link {
+  text-decoration: none;
+}
