@@ -17,6 +17,10 @@ var UserSchema = new mongoose.Schema({
             type: Number,
             default: 0
         },
+        expiredAt: {
+            type: Date,
+            default: Date.now() + 2*30*3600*24*1000
+        },
         mostRecentVideo: {
             video: {
                 type: mongoose.Schema.Types.ObjectId,
@@ -29,24 +33,24 @@ var UserSchema = new mongoose.Schema({
         },
         _id: false
     }],
-    parts: [{
-        part: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Part"
-        },
-        expiredAt: {
-            type: Date,
-        },
-        expired: {
-            type: Boolean,
-            default: false
-        },
-        checked: {
-            type: Boolean,
-            default: false
-        },
-        _id: false
-    }],
+    // parts: [{
+    //     part: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: "Part"
+    //     },
+    //     expiredAt: {
+    //         type: Date,
+    //     },
+    //     expired: {
+    //         type: Boolean,
+    //         default: false
+    //     },
+    //     checked: {
+    //         type: Boolean,
+    //         default: false
+    //     },
+    //     _id: false
+    // }],
     videos: [{
         video: {
             type: mongoose.Schema.Types.ObjectId,

@@ -1,3 +1,7 @@
 .cart-btn {
   border-color: #ddd;
 }
+
+a {
+  cursor: pointer;
+}

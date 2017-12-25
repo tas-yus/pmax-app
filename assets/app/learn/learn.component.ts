@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Course } from './../courses/course.model';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -13,12 +13,16 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class LearnComponent implements OnInit {
   course: Course = null;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient, public sanitizer: DomSanitizer) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient, public sanitizer: DomSanitizer, private router: Router) {}
 
   ngOnInit() {
     const courseCode = this.route.snapshot.params['courseCode'];
-    this.http.get<Course>(`/api/courses/${courseCode}`).subscribe(data => {
+    this.http.get<Course>(`/api/courses/${courseCode}/learn`).subscribe(data => {
       this.course = data;
+    }, (err) => {
+      if (err.status === 401) {
+        this.router.navigate([`/dashboard`]);
+      }
     });
   }
 }

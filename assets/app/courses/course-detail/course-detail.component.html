@@ -2,14 +2,14 @@
   <ng-template [ngIf]="course">
     <div class="jumbotron">
       <div class="container">
-        <h2 class="mb-4 title">{{ course.title }}</h2>
-        <h5 class="desc" id="thai-description">{{ course.description }}</h5>
+        <h2 class="mb-4 title">{{ course.course.title }}</h2>
+        <h5 class="desc" id="thai-description">{{ course.course.description }}</h5>
       </div>
     </div>
     <div class="col-md-4 pull-right sticky-top aside">
-      <course-aside [course]="course"></course-aside>
+      <course-aside [course]="course.course" [alreadyAdded]="!!course.owned"></course-aside>
     </div>
-    <part-list [parts]="course.parts"></part-list>
-    <course-overview [parts]="course.parts"></course-overview>
+    <part-list [parts]="course.course.parts"></part-list>
+    <course-overview [parts]="course.course.parts"></course-overview>
   </ng-template>
 </div>

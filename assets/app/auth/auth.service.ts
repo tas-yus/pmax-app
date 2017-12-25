@@ -11,7 +11,8 @@ export class AuthService {
     let url = "/api/login";
     this.http.post<{username: string}>(url, {username, password, rememberMe}).subscribe(data => {
       sessionStorage.setItem('currentUser', JSON.stringify(data));
-      this.router.navigate(["/courses"])
+      this.router.navigate(["/courses"]);
+      this.router.navigate(["/dashboard"]);
     }, err => {
       console.log(err);
     });
@@ -21,7 +22,6 @@ export class AuthService {
     let url = "/api/logout";
     this.http.post(url, null).subscribe(data => {
       sessionStorage.clear();
-      this.router.navigate(["/courses"])
     }, err => {
       console.log(err);
     });

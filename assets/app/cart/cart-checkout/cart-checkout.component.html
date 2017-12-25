@@ -5,21 +5,25 @@
   </div>
   <div class="row">
     <div class="col-sm-4">
-      <p>Your Item (1)</p>
+      <p>Your Item ({{courses.length}})</p>
       <hr>
-      <div class="row">
-        <div class="col-md-5">
-          <img style="width:100%" src="/assets/images/chem1.jpg" alt="">
-        </div>
-        <div class="desc col-md-7 m-0 pt-3">
-          <p>Chem Olympic 1</p>
-          <p class="font-weight-bold text-danger">500 Bahts</p>
+      <div class="item" *ngFor="let course of courses">
+        <div class="row mb-2">
+          <div class="col-md-5">
+            <a routerLink="/courses/{{course.code}}">
+              <img style="width:100%" src="/assets/images/{{course.image}}" alt="">
+            </a>
+          </div>
+          <div class="desc col-md-7 m-0 pt-3">
+            <p>{{course.title}}</p>
+            <p class="font-weight-bold text-danger">{{course.price}} Bahts</p>
+          </div>
         </div>
       </div>
     </div>
     <div class="col-sm-8">
       <div class="d-flex justify-content-between align-content-center">
-        <h3>Total: 500 Bahts</h3>
+        <h3>Total: {{findTotal(courses)}} Bahts</h3>
         <a style="cursor:pointer;" *ngIf="!newCard" (click)="newCard = !newCard">Add New Card</a>
         <a style="cursor:pointer;" *ngIf="newCard" (click)="newCard = !newCard">Cancel</a>
       </div>
@@ -37,7 +41,7 @@
           VISA
           <i class="fa fa-credit-card-alt ml-2" aria-hidden="true"></i>
           <hr>
-          <a class="btn btn-warning">Complete Payment</a>
+          <a class="btn btn-warning" (click)="onCheckout()">Complete Payment</a>
         </div>
       </div>
       <div class="paypal card my-2">

@@ -4,24 +4,32 @@
   </div>
   <div class="row">
     <div class="col-sm-7">
-      <p>Your Item (1)</p>
+      <p>Your Item ({{courses.length}})</p>
       <hr>
-      <div class="card p-2">
-        <div class="row">
-          <div class="col-md-4">
-            <img style="width:100%" src="/assets/images/chem1.jpg" alt="">
-          </div>
-          <div class="desc col-md-8 mt-3">
-            <p>Chem Olympic 1</p>
-            <p class="font-weight-bold text-danger">500 Bahts</p>
+      <div *ngFor="let course of courses" class="item mb-2">
+        <div class="card p-2">
+          <div class="row">
+            <div class="col-md-4">
+              <a routerLink="/courses/{{course.code}}">
+                <img style="width:100%" src="/assets/images/{{course.image}}" alt="">
+              </a>
+            </div>
+            <div class="desc col-md-8 mt-3">
+              <p>{{course.title}}</p>
+              <p class="font-weight-bold text-danger">{{course.price}} Bahts</p>
+            </div>
           </div>
         </div>
       </div>
+      <p *ngIf="!courses || courses.length === 0">Your cart is empty <a routerLink="/courses">Browse Courses</a></p>
     </div>
     <div class="col-sm-5">
-      <h3>Total</h3>
-      <h2>500 Bahts</h2>
-      <a routerLink="/cart/checkout" class="btn btn-lg btn-primary">Proceed To Check Out</a>
+      <ng-template [ngIf]="courses && courses.length !== 0">
+        <h3>Total</h3>
+        <h2>{{findTotal(courses)}} Bahts</h2>
+        <a routerLink="/cart/checkout" class="btn btn-lg btn-primary">Proceed To Check Out</a>
+      </ng-template>
+      <a *ngIf="!courses || courses.length === 0" routerLink="/courses" class="btn btn-lg btn-primary">Browse Courses</a>
     </div>
   </div>
 </div>

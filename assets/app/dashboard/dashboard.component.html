@@ -8,24 +8,15 @@
         <h5 class="mt-2 text-center">Tas Yusoontorn</h5>
         <hr>
         <ul class="pl-0 text-center" style="list-style:none;">
-          <li><a href="">Edit Profile</a></li>
-          <li><a href="">Public Profile</a></li>
-          <li><a href="">Account Info</a></li>
-          <li><a href="">Purchase History</a></li>
+          <a routerLink="/dashboard"><li>Your Courses</li></a>
+          <a routerLink="/dashboard/edit"><li>Edit Profile</li></a>
+          <a routerLink="/dashboard/credit"><li>Credit Card Info</li></a>
+          <a routerLink="/dashboard/purchase"><li>Purchase History</li></a>
         </ul>
       </div>
     </div>
-    <div class="card-body col-md-9 container">
-      <div class="courses">
-        <h5>Your Courses
-          <i class="fa fa-minus ml-2" *ngIf="showCourse" (click)="showCourse = !showCourse" aria-hidden="true"></i>
-          <i class="fa fa-plus ml-2" *ngIf="!showCourse" (click)="showCourse = !showCourse" aria-hidden="true"></i>
-        </h5>
-        <course-list *ngIf="showCourse"></course-list>
-      </div>
-      <div class="purchase">
-        <h5>Purchase History <i class="fa fa-minus ml-2" aria-hidden="true"></i></h5>
-      </div>
+    <div class="card-body col-md-9 col-sm-7 container">
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

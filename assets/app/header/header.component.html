@@ -15,13 +15,21 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/courses">Courses</a>
         </li>
-        <li class="nav-item" *ngIf="!authService.isAuthenticated()">
-          <a class="nav-link" routerLink="/courses/chem-olympic-1/learn">About Us</a>
-        </li>
-        <li class="nav-item" *ngIf="authService.isAuthenticated()">
-          <a class="nav-link" *ngIf="currentUser" routerLink="/courses/chem-olympic-1/learn">Signed In As {{currentUser.username}}</a>
-        </li>
+        <ng-template [ngIf]="authService.isAuthenticated()">
+          <li class="nav-item">
+            <a class="nav-link" *ngIf="currentUser" routerLink="/dashboard">Signed In As {{currentUser.username}}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/cart">Your Cart</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" style="cursor: pointer" (click)="onLogoutUser()">Logout</a>
+          </li>
+        </ng-template>
         <ng-template [ngIf]="!authService.isAuthenticated()">
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/courses/chem-olympic-1/learn">About Us</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/register">Register</a>
           </li>
@@ -29,9 +37,6 @@
             <a class="nav-link" routerLink="/login">Login</a>
           </li>
         </ng-template>
-        <li class="nav-item" *ngIf="authService.isAuthenticated()">
-          <a class="nav-link" style="cursor: pointer" (click)="onLogoutUser()">Logout</a>
-        </li>
       </ul>
     </form>
   </div>

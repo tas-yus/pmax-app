@@ -21,7 +21,7 @@ export class VideoComponent implements OnInit {
   ngOnInit() {
     const courseCode = this.route.snapshot.params['courseCode'];
     this.loadScript();
-    this.http.get<Course>(`/api/courses/${courseCode}`).subscribe(data => {
+    this.http.get<Course>(`/api/courses/${courseCode}/learn`).subscribe(data => {
       this.course = data;
     });
     const partCode = this.route.snapshot.params['partCode'];

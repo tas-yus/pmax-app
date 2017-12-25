@@ -44,18 +44,36 @@ router.get("/", (req, res) => {
     if (err) {
       return res.status(400).send("There's an error with the database");
     } else {
-      res.status(200).json(courses);
+      res.status(200).send(courses);
     }
+  });
+});
+
+router.get("/:courseCode/learn", middleware.isLoggedIn, (req, res) => {
+  fetchCourse(req.params.courseCode).then((course) => {
+    if (!course) {
+      return res.status(400).send("Cannot find a course with particular id");
+    }
+    if (!method.checkCourseOwnership(req.user.courses, course._id)) {
+      return res.status(401).send({message: "Cannot Access"});
+    }
+    res.status(200).send(course);
+  }).catch((err) => {
+    res.status(400).send("Something is wrong with the database");
   });
 });
 
 router.get("/:courseCode", (req, res) => {
   fetchCourse(req.params.courseCode).then((course) => {
     if (!course) {
-      res.status(400).send("Cannot find a course with particular id");
-    } else {
-      res.status(200).send(course);
+      return res.status(400).send("Cannot find a course with particular id");
     }
+    if (req.user && method.checkCourseOwnership(req.user.courses, course._id)) {
+      return res.status(401).send({message: "Cannot Access"});
+    }
+    var owned = req.user? method.checkCourseOwnership(req.user.courses, course._id) ||
+    method.checkCartCourseOwnership(req.user.cartCourses, course._id) : false;
+    res.status(200).send({course, owned});
   }).catch((err) => {
     res.status(400).send("Something is wrong with the database");
   });
@@ -87,23 +105,23 @@ router.post("/", (req, res) => {
 // UPDATE COURSE
 
 // UP DATE PART AND ORDER AND VIDEO IF NAME HAS CHANGEd.
-router.put("/:courseCode", (req, res) => {
-  fetchCourse(req.params.courseCode).then((course) => {
-    course.title = req.body.title;
-    course.code = method.createCode(req.body.title);
-    course.price = req.body.price;
-    course.description = req.body.description;
-    course.video = req.body.video;
-    if (req.body.image) {
-      course.image = req.body.image + '.jpg';
-    }
-    return course.save()
-  }).then((course) => {
-    res.status(200).send(course);
-  }).catch((err) => {
-    res.status(400).send("Something is wrong with the database");
-  });
-});
+// router.put("/:courseCode", (req, res) => {
+//   fetchCourse(req.params.courseCode).then((course) => {
+//     course.title = req.body.title;
+//     course.code = method.createCode(req.body.title);
+//     course.price = req.body.price;
+//     course.description = req.body.description;
+//     course.video = req.body.video;
+//     if (req.body.image) {
+//       course.image = req.body.image + '.jpg';
+//     }
+//     return course.save()
+//   }).then((course) => {
+//     res.status(200).send(course);
+//   }).catch((err) => {
+//     res.status(400).send("Something is wrong with the database");
+//   });
+// });
 
 // DELETE
 router.delete("/:id", (req, res) => {
@@ -113,6 +131,7 @@ router.delete("/:id", (req, res) => {
     res.status(400).send("Something is wrong with the database");
   });
 });
+
 
 
 module.exports = router;

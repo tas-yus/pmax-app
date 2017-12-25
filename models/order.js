@@ -12,10 +12,10 @@ var OrderSchema = new mongoose.Schema({
           type: mongoose.Schema.Types.ObjectId,
           ref: "Course"
     },
-    part: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Part"
-    },
+    // part: {
+    //       type: mongoose.Schema.Types.ObjectId,
+    //       ref: "Part"
+    // },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

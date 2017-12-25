@@ -55,11 +55,19 @@ methodObj.isFinished = function (arr, id) {
 
 methodObj.getCourseInArrayById = function(arr, id) {
     var result  = arr.filter(function(o){
-        if (o.course._id) {
-            return o.course._id.equals(id);
+        if (o.course) {
+          if (o.course._id) {
+              return o.course._id.equals(id);
+          } else {
+              return o.course.equals(id);
+          }
         } else {
-            return o.course.equals(id);
-        }
+          if (o._id) {
+             return o._id.equals(id);
+         } else {
+             return o.equals(id);
+         }
+       }
     });
     return result? result[0] : null; // or undefined
 };
@@ -110,30 +118,29 @@ methodObj.checkCourseOwnership = function(courseArray, courseId) {
     for(var i = 0; i < courseArray.length; i++) {
         var userCourseBundle = courseArray[i];
         if (userCourseBundle.course._id) {
-             if (userCourseBundle.course._id.toString() !== courseId) continue;
+             if (!userCourseBundle.course._id.equals(courseId)) continue;
         } else {
-             if (userCourseBundle.course.toString() !== courseId) continue;
+             if (!userCourseBundle.course.equals(courseId)) continue;
         }
-        if (userCourseBundle.expired) return "expired";
-        else return true;
+        return true;
     }
     return false;
 };
 
-methodObj.checkPartOwnership = function(partArray, partId) {
-    if(partArray.length === 0) return false;
-    for(var i = 0; i < partArray.length; i++) {
-        var userPartBundle = partArray[i];
-        if (userPartBundle.part._id) {
-            if (userPartBundle.part._id.toString() !== partId) continue;
-        } else {
-            if (userPartBundle.part.toString() !== partId) continue;
-        }
-        if (userPartBundle.expired) return "expired";
-        else return true;
-    }
-    return false;
-};
+// methodObj.checkPartOwnership = function(partArray, partId) {
+//     if(partArray.length === 0) return false;
+//     for(var i = 0; i < partArray.length; i++) {
+//         var userPartBundle = partArray[i];
+//         if (userPartBundle.part._id) {
+//             if (!userPartBundle.part._id.equals(partId)) continue;
+//         } else {
+//             if (!userPartBundle.part.equals(partId)) continue;
+//         }
+//         if (userPartBundle.expired) return "expired";
+//         else return true;
+//     }
+//     return false;
+// };
 
 methodObj.checkCartCourseOwnership = function(cartCourseArray, courseId) {
     if(cartCourseArray.length === 0) {
@@ -142,71 +149,63 @@ methodObj.checkCartCourseOwnership = function(cartCourseArray, courseId) {
     for(var i = 0; i < cartCourseArray.length; i++) {
         var userCartCourseBundle = cartCourseArray[i];
         if (userCartCourseBundle._id) {
-             if (userCartCourseBundle._id.toString() !== courseId) continue;
+             if (!userCartCourseBundle._id.equals(courseId)) continue;
         } else {
-             if (userCartCourseBundle.toString() !== courseId) continue;
+             if (!userCartCourseBundle.equals(courseId)) continue;
         }
         return true;
     }
     return false;
 };
 
-methodObj.getBuyableParts = function(populatedCoursePartArray, userPartArray) {
-    var buyableParts = [];
-    populatedCoursePartArray.forEach((part) => {
-        if (methodObj.checkPartOwnership(userPartArray, part._id.toString()) !== true &&
-            methodObj.checkPartOwnership(userPartArray, part._id.toString()) !== "expired") {
-            buyableParts.push(part);
-        }
-    });
-    return buyableParts;
-};
+// methodObj.getBuyableParts = function(populatedCoursePartArray, userPartArray) {
+//     var buyableParts = [];
+//     populatedCoursePartArray.forEach((part) => {
+//         if (methodObj.checkPartOwnership(userPartArray, part._id.toString()) !== true &&
+//             methodObj.checkPartOwnership(userPartArray, part._id.toString()) !== "expired") {
+//             buyableParts.push(part);
+//         }
+//     });
+//     return buyableParts;
+// };
 
-methodObj.getExtendableParts = function(populatedCoursePartArray, userPartArray) {
-    var extendableParts = [];
-    populatedCoursePartArray.forEach((part) => {
-       if (methodObj.checkPartOwnership(userPartArray, part._id.toString()) === "expired") {
-           extendableParts.push(part);
-       }
-    });
-    return extendableParts;
-};
+// methodObj.getExtendableParts = function(populatedCoursePartArray, userPartArray) {
+//     var extendableParts = [];
+//     populatedCoursePartArray.forEach((part) => {
+//        if (methodObj.checkPartOwnership(userPartArray, part._id.toString()) === "expired") {
+//            extendableParts.push(part);
+//        }
+//     });
+//     return extendableParts;
+// };
 
-methodObj.checkIfPartsOfCourseNameExisted = function(populatedUserPartArray, courseTitle) {
-    for(var i = 0; i < populatedUserPartArray.length; i++) {
-        var userPartBundle = populatedUserPartArray[i];
-        if (userPartBundle.part.course === courseTitle) return true;
-    }
-    return false;
-};
+// methodObj.checkIfPartsOfCourseNameExisted = function(populatedUserPartArray, courseTitle) {
+//     for(var i = 0; i < populatedUserPartArray.length; i++) {
+//         var userPartBundle = populatedUserPartArray[i];
+//         if (userPartBundle.part.course === courseTitle) return true;
+//     }
+//     return false;
+// };
 
-methodObj.checkIfCourseShouldExpired = function(populatedUserCourseBundle, populatedUserPartArray) {
-    if (populatedUserPartArray.length === 0) return false;
-    for (var i = 0; i < populatedUserPartArray.length; i++) {
-        var populatedUserPartBundle = populatedUserPartArray[i];
-         if (populatedUserPartBundle.part.course === populatedUserCourseBundle.course.title &&
-            !populatedUserPartBundle.expired) {
-              return false;
-          }
-    }
-    return true;
+methodObj.checkCourseExpiry = function(userCourseBundle) {
+  return userCourseBundle.expiredAt <= new Date();
 };
 
 methodObj.checkIfCourseContainsUserOfId = function (courseUserArray, id) {
     for (var i = 0; i < courseUserArray.length; i++) {
       var courseUser = courseUserArray[i];
-      if (courseUser.toString() === id) return true;
+      if (courseUser.equals(id)) return true;
     }
     return false;
 };
-
-methodObj.checkIfPartContainsUserOfId = function (partUserArray, id) {
-    for (var i = 0; i < partUserArray.length; i++) {
-      var partUser = partUserArray[i];
-      if (partUser.toString() === id) return true;
-    }
-    return false;
-};
+//
+// methodObj.checkIfPartContainsUserOfId = function (partUserArray, id) {
+//     for (var i = 0; i < partUserArray.length; i++) {
+//       var partUser = partUserArray[i];
+//       if (partUser.toString() === id) return true;
+//     }
+//     return false;
+// };
 
 methodObj.searchUsersByUsername = function (str) {
   User.find({username : new RegExp(str, 'i')}, (err, users) => {
@@ -227,19 +226,23 @@ methodObj.getDuration = function(videoArray) {
   return methodObj.toClockTime(duration);
 }
 
-methodObj.createArray = function(suspectedArray) {
-  var result = [];
-  if (Array.isArray(suspectedArray)) {
-      result = suspectedArray;
-  } else {
-      result.push(suspectedArray);
-  }
-  return result;
-}
+// methodObj.createArray = function(suspectedArray) {
+//   var result = [];
+//   if (Array.isArray(suspectedArray)) {
+//       result = suspectedArray;
+//   } else {
+//       result.push(suspectedArray);
+//   }
+//   return result;
+// }
 
 methodObj.removeExtension = function(fileName) {
   var name = fileName.split(".")[0];
   return name;
 }
+
+// method.Obj.returnUnownedCourses = function(courseArray, userCourseArray) {
+//
+// }
 
 module.exports = methodObj;

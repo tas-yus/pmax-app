@@ -18,7 +18,12 @@ import { RegisterComponent } from './auth/register/register.component';
 import { VideoComponent } from './videos/video.component';
 import { LearnComponent } from './learn/learn.component';
 import { LearnOverviewComponent } from './learn/learn-overview/learn-overview.component';
+import { YourCourseComponent } from './dashboard/your-course/your-course.component'
+import { PurchaseHistoryComponent } from './dashboard/purchase-history/purchase-history.component'
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { EditProfileComponent } from './dashboard/edit-profile/edit-profile.component';
+import { CreditCardInfoComponent } from './dashboard/credit-card-info/credit-card-info.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
@@ -39,7 +44,12 @@ import { AuthGuard } from './auth/auth-guard.service';
     VideoComponent,
     LearnComponent,
     LearnOverviewComponent,
-    DashboardComponent
+    DashboardComponent,
+    YourCourseComponent,
+    PurchaseHistoryComponent,
+    EditProfileComponent,
+    CreditCardInfoComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

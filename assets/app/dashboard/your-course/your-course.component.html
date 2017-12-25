@@ -1,0 +1,18 @@
+<div class="container my-4">
+  <div class="text-center">
+    <h4>Courses</h4>
+    <hr>
+    <p>คอร์สทั้งหมด</p>
+  </div>
+  <div class="row">
+    <p class="pl-5 my-3" *ngIf="courses.length === 0">No courses. <a routerLink="/courses">Browse Courses</a> or <a routerLink="/cart/checkout">Checkout</a></p>
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-2" *ngFor="let courseBundle of courses">
+      <a routerLink="/courses/{{courseBundle.course.code}}/learn" class="card">
+        <img class="card-img-top" src="/assets/images/{{courseBundle.course.image}}" alt="{{courseBundle.course.title}}">
+        <div class="card-body p-2 text-center">
+          <h6 class="card-title text-dark">{{courseBundle.course.title}}</h6>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

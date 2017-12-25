@@ -12,3 +12,7 @@
 .shop-link {
   text-decoration: none;
 }
+
+.item img {
+  border-radius: 5px;
+}

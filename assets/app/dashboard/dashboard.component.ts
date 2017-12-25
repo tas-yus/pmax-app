@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Course } from '../courses/course.model';
 
 @Component({
   selector: 'dashboard',
@@ -9,11 +10,9 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class DashboardComponent implements OnInit {
-
-  showCourse: Boolean = true;
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
-
+    
   }
 }

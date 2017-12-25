@@ -1,0 +1,40 @@
+<div class="container my-4">
+  <div class="text-center">
+    <h4>Purchase History</h4>
+    <hr>
+    <p>ข้อมูลการซื้อคอร์สของท่าน</p>
+  </div>
+  <ng-template [ngIf]="orders.length !== 0">
+    <h6>Sort By:
+      <select name="sort">
+        <option value="date">Date</option>
+        <option value="price">Price</option>
+      </select>
+    </h6>
+    <table class="table">
+      <thead class="thead-inverse">
+        <tr>
+          <th>#</th>
+          <th>Course Name</th>
+          <th>Order Type</th>
+          <th>Date</th>
+          <th>Invoice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of orders; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{order.course.title}}</td>
+          <td>{{order.type}}</td>
+          <td>{{getDate(order.createdAt)}}</td>
+          <td><a href="">pdf</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </ng-template>
+  <div class="row">
+    <div *ngIf="!orders || orders.length === 0">
+      <p class="pl-5 my-3">No Purchase History. <a routerLink="/courses">Browse Courses</a> or <a routerLink="/cart/checkout">Checkout</a></p>
+    </div>
+  </div>
+</div>

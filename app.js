@@ -82,10 +82,6 @@ app.use(function (req, res, next) {
 
 app.use(async function(req, res, next) {
   var user = req.user;
-  user = await Course.populate(user, {path: "courses.course"});
-  user = await Course.populate(user, {path: "cartCourses"});
-  user = await Part.populate(user, {path: "parts.part"});
-  user = await Video.populate(user, {path: "videos.video"});
   user = await Video.populate(user, {
     path: "courses.mostRecentVideo.video",
     select: "code part title",
