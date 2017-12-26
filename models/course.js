@@ -46,7 +46,7 @@ var CourseSchema = new mongoose.Schema({
         }
 
     ],
-    order: "Number",
+    order: Number,
     numVideos: {
       type: Number,
       default: 0

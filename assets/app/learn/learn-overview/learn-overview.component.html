@@ -7,7 +7,7 @@
             {{part.title}}
           </a>
         </h5>
-        <p class="m-0"> 0 / {{part.videos.length}} </p>
+        <p class="m-0"> {{ getNumFinishedVideos(user.videos, part._id) }} / {{part.videos.length}} </p>
       </div>
       <div id="collapse{{i}}" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
         <a *ngFor="let video of part.videos"
@@ -18,7 +18,7 @@
           </div>
           <div class="d-flex justify-content-between video-duration">
             <div class="pr-4">{{video.duration}}</div>
-            <div><i class="fa fa-circle-o text-primary" (click)="onUpdateVidStatus()" aria-hidden="true"></i></div>
+            <div><i class="fa {{getVideoInArrayById(user.videos, video._id).finished? 'fa-check-circle':'fa-circle-o'}} text-primary" (click)="onUpdateVidStatus($event,video.code)" aria-hidden="true"></i></div>
           </div>
         </a>
       </div>

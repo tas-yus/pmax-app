@@ -88,10 +88,10 @@
       </div>
     </div>
   </div>
-  <div *ngIf="course" class="course-overview">
+  <div *ngIf="course && user" class="course-overview">
     <div class="inner-left">
       <div class="container-fluid my-3">
-        <learn-overview [course]="course"></learn-overview>
+        <learn-overview [user]="user" [course]="course"></learn-overview>
       </div>
     </div>
   </div>

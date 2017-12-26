@@ -15,6 +15,7 @@ declare var $:any;
 export class VideoComponent implements OnInit {
   video: Video = null;
   course: Course = null;
+  user = null;
 
   constructor(private route: ActivatedRoute, private http: HttpClient) {}
 
@@ -23,6 +24,13 @@ export class VideoComponent implements OnInit {
     this.loadScript();
     this.http.get<Course>(`/api/courses/${courseCode}/learn`).subscribe(data => {
       this.course = data;
+      this.http.get<{course, videos}>(`/api/users/${courseCode}/learn`).subscribe(data => {
+        this.user = data;
+      }, (err) => {
+        if (err.status === 401) {
+          // this.router.navigate([`/dashboard`]);
+        }
+      });
     });
     const partCode = this.route.snapshot.params['partCode'];
     this.route.params.subscribe(params => {

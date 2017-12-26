@@ -12,10 +12,7 @@ export class AppComponent implements OnInit {
   displayHeader: Boolean = true;
 
   constructor(private http: HttpClient) {}
-  
-  getNotification(evt) {
-    console.log("hey");
-  }
+
   ngOnInit() {
     this.http.get("/api/session").subscribe(data => {
       if(!sessionStorage.getItem("currentUser")) {

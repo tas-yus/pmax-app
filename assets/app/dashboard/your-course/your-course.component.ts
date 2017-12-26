@@ -20,6 +20,6 @@ export class YourCourseComponent implements OnInit {
       this.courses = data;
     }, (err) => {
       console.log(err);
-    })
+    });
   }
 }
