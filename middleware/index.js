@@ -53,6 +53,24 @@ middlewareObj.canExtend = function(req, res, next) {
     });
 };
 
+middlewareObj.checkLoginValidity = function(req, res, next) {
+  if (!req.body.username) {
+    return res.status(400).send({message: "No username given"});
+  }
+  if (!req.body.password) {
+    return res.status(400).send({message: "No password given"});
+  }
+  next();
+};
+
+middlewareObj.checkRegisterValidity = function(req, res, next) {
+  if (!req.body.username || !req.body.password || !req.body.user.firstName
+  || !req.body.user.lastName || !req.body.user.email) {
+    return res.status(400).send({message: "One of the required fields is missing"});
+  }
+  next();
+}
+
 middlewareObj.isAdmin = function(req, res, next) {
     if (req.user.isAdmin === true) {
         return next();

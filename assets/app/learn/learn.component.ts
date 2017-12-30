@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild, SecurityContext } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { Course } from './../courses/course.model';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CourseService } from './../courses/course.service';
 
 @Component({
   selector: 'learn',
   templateUrl: './learn.component.html',
-  styleUrls: ['./learn.component.css']
+  styleUrls: ['./learn.component.css'],
+  providers: [CourseService]
 })
 
 export class LearnComponent implements OnInit {
@@ -17,24 +18,16 @@ export class LearnComponent implements OnInit {
   @ViewChild('numFinishedVideos') numFinishedVideos;
   @ViewChild('progress') progress;
 
-  constructor(private route: ActivatedRoute, private http: HttpClient,
-    public sanitizer: DomSanitizer, private router: Router) { }
+  constructor(private route: ActivatedRoute, public sanitizer: DomSanitizer,
+    private courseService: CourseService) { }
 
   ngOnInit() {
     const courseCode = this.route.snapshot.params['courseCode'];
-    this.http.get<Course>(`/api/courses/${courseCode}/learn`).subscribe(data => {
-      this.course = data;
-      this.http.get<{course, videos}>(`/api/users/${courseCode}/learn`).subscribe(data => {
-        this.user = data;
-      }, (err) => {
-        if (err.status === 401) {
-          this.router.navigate([`/dashboard`]);
-        }
-      });
-    }, (err) => {
-      if (err.status === 401) {
-        this.router.navigate([`/dashboard`]);
-      }
+    this.courseService.getLearnCourse(courseCode, (course) => {
+      this.course = course;
+    });
+    this.courseService.getLearnUser(courseCode, (user) => {
+      this.user = user;
     });
   }
 
@@ -54,12 +47,12 @@ export class LearnComponent implements OnInit {
 
   updateView() {
     const courseCode = this.route.snapshot.params['courseCode'];
-    this.http.get<{course, videos}>(`/api/users/${courseCode}/learn`).subscribe(data => {
-      this.user = data;
-    }, (err) => {
-      if (err.status === 401) {
-        this.router.navigate([`/dashboard`]);
-      }
+    this.courseService.getLearnUser(courseCode, (user) => {
+      this.user = user;
     });
+  }
+
+  getUrl() {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.course.video);
   }
 }

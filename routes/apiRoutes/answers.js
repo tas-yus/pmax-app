@@ -6,7 +6,7 @@ var Answer = require("./../../models/answer");
 
 // CREATE ANSWER
 router.post("/", (req, res) => {
-  var newAnswer = req.body.answer;
+  var newAnswer = req.body;
   newAnswer.author = req.user;
   Question.findOne({code: req.params.questionCode}, (err, question) => {
     if (err) return console.log(err);

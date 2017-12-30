@@ -3,3 +3,22 @@
   min-width: 350px;
   margin: 0 auto;
 }
+
+.invalid-feedback {
+  display: block;
+}
+
+.password-strength {
+  margin-top: .25rem;
+  font-size: .875rem;
+}
+
+.password-strength div {
+  width: 25%;
+  text-align: center;
+}
+
+.password-strength div:first-child {
+  width: inherit;
+  margin-right: 10px;
+}

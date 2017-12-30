@@ -12,38 +12,41 @@ var method = require("./../../method");
 var checkExpiry = require("./../../method/checkExpiry");
 var config = require("./../../config");
 var mongoose = require("mongoose");
-var forEach = require('async-foreach').forEach;
 var async = require('async');
-var fs = require("fs");
-var path = require("path");
 
 // QUESTIONS
 router.get("/questions", async (req, res) => {
   var course = await Course.findOne({code: req.params.courseCode}).populate("questions").exec();
   var questions = await User.populate(course.questions, {path: "author", select: "username"});
-  questions = await Answer.populate(questions, {path: "answers", select: "author body"});
+  questions = await Answer.populate(questions, {path: "answers", select: "author body createdAt"});
   questions = await User.populate(questions, {path: "answers.author", select: "username", model: User});
   res.status(400).send(questions);
 });
 
 // CREATE QUESTIONS
-router.post("/parts/:partCode/videos/:vidCode/questions", async (req, res) => {
-  console.log(req.body.question);
-  var newQuestion = req.body.question;
+router.post("/parts/:partCode/videos/:vidCode/questions", (req, res) => {
+  var newQuestion = req.body;
   newQuestion.author = req.user;
-  var video = await Video.findOne({code: req.params.vidCode});
-  newQuestion.video = video._id;
-  var question =  await Question.create(newQuestion);
-  var course = await Course.findOne({code: req.params.courseCode});
-  newQuestion.video = video;
-  video.questions.push(question);
-  course.questions.push(question);
-  video.save().then(() => {
+  var question;
+  var video;
+  Video.findOne({code: req.params.vidCode}).then((foundVideo) => {
+    newQuestion.video = video;
+    video = foundVideo;
+    return Question.create(newQuestion);
+  }).then((createdQuestion) => {
+    question = createdQuestion;
+    video.questions.push(question);
+    return video.save();
+  }).then((video) => {
+    return Course.findOne({code: req.params.courseCode});
+  }).then((course) => {
+    course.questions.push(question);
     return course.save();
   }).then(() => {
     res.status(201).send(question);
   }).catch((err) => {
-    res.status(400).send("Something is wrong with the database.");
+    console.log(err);
+    res.status(400).send({err, message: "Something went wrong"});
   });
 });
 

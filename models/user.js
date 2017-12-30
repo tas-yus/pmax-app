@@ -94,6 +94,7 @@ var UserSchema = new mongoose.Schema({
             default: []
         }
     ],
+    image: String,
     isAdmin: {
         type: Boolean,
         default: false

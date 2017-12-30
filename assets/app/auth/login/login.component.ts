@@ -11,8 +11,20 @@ import { AuthService } from '../auth.service';
 })
 
 export class LoginComponent implements OnInit {
+  errMessage: String;
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.authService.errDetected.subscribe((err) => {
+      if (err.status === 400) {
+        this.errMessage = err.error.message;
+      } else if (err.status === 401) {
+        this.errMessage = "Wrong username or password";
+      }
+      setTimeout(() => {
+        this.errMessage = null;
+      }, 3000);
+    });
+  }
 
   ngOnInit() {
   }

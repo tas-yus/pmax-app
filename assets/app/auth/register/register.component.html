@@ -1,38 +1,90 @@
 <div class="container my-4">
   <div class="register">
     <h2 class="mb-3">Sign Up</h2>
-    <form action="/register" method="POST">
+    <form (ngSubmit)="onRegisterUser(f)" #f="ngForm">
       <div class="form-group">
         <label>Username: </label>
-        <input class="form-control" type="text" name="username" placeholder="username" required>
+        <input class="form-control" type="text" name="username"
+        placeholder="username" ngModel required #username="ngModel"
+        minlength="5" maxlength="10"
+        [class.is-valid]="username.valid" [class.is-invalid]="!username.valid && username.touched">
+        <span class="invalid-feedback" *ngIf="!username.value && username.touched">
+          *Please enter a username
+        </span>
+        <span class="invalid-feedback" *ngIf="username.value && !username.valid">
+          *Username has to be at least 5 characters and less than 10 characters in length
+        </span>
       </div>
       <div class="form-group">
         <label>Password: </label>
-        <input class="form-control" type="password" name="password" placeholder="password" required>
+        <input class="form-control" type="password" name="password"
+        placeholder="password" ngModel required #password="ngModel"
+        [class.is-valid]="password.valid" [class.is-invalid]="!password.valid && password.touched">
+        <span class="invalid-feedback" *ngIf="!password.valid && password.touched">
+          *Please enter a password
+        </span>
+        <ng-template [ngIf]="password.value">
+          <div class="password-strength d-flex justify-content-start">
+            <div>Strength: </div>
+            <div class="bg-success text-white" *ngIf="analyze(password.value)==='strong'">strong</div>
+            <div class="bg-warning" *ngIf="analyze(password.value)==='medium'">medium</div>
+            <div class="bg-danger" *ngIf="analyze(password.value)==='weak'">weak</div>
+          </div>
+        </ng-template>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password: </label>
+        <input class="form-control" type="password" name="password2"
+        placeholder="password" ngModel required #password2="ngModel"
+        [class.is-valid]="password2.valid && password.value === password2.value"
+        [class.is-invalid]="password2.touched && password.value !== password2.value">
+        <span class="invalid-feedback" *ngIf="!password2.valid && password2.touched">
+          *Please confirm your password
+        </span>
+        <span class="invalid-feedback"
+        *ngIf="password2.valid && password2.touched
+        && password.value !== password2.value">
+          *Passwords do not match
+        </span>
       </div>
       <div class="form-group">
         <label>First Name: </label>
-        <input class="form-control" type="text" name="user[firstName]" placeholder="ชื่อ" required>
+        <input class="form-control" type="text" name="firstName"
+        placeholder="ชื่อ" ngModel required #firstName="ngModel" maxlength="10"
+        [class.is-valid]="firstName.valid" [class.is-invalid]="!firstName.valid && firstName.touched">
+        <span class="invalid-feedback" *ngIf="!firstName.valid && firstName.touched">
+          *Please enter your first name
+        </span>
       </div>
       <div class="form-group">
         <label>Last Name: </label>
-        <input class="form-control" type="text" name="user[lastName]" placeholder="สกุล" required>
+        <input class="form-control" type="text" name="lastName"
+        placeholder="สกุล" ngModel required #lastName="ngModel" maxlength="10"
+        [class.is-valid]="lastName.valid" [class.is-invalid]="!lastName.valid && lastName.touched">
+        <span class="invalid-feedback" *ngIf="!lastName.valid && lastName.touched">
+          *Please enter your last name
+        </span>
       </div>
       <div class="form-group">
         <label>Email: </label>
-        <input class="form-control" type="text" name="user[email]" placeholder="อีเมลล์" required>
+        <input class="form-control" type="text" name="email"
+        placeholder="อีเมลล์" ngModel required #email="ngModel" email
+        [class.is-valid]="email.valid" [class.is-invalid]="!email.valid && email.touched">
+        <span class="invalid-feedback" *ngIf="!email.valid && email.touched">
+          *Please enter your email
+        </span>
       </div>
       <div class="form-group">
         <label>Phone: </label>
-        <input class="form-control" type="text" name="user[phone]" placeholder="มือถือ" required>
+        <input class="form-control" type="text" name="phone" placeholder="มือถือ" required>
       </div>
       <div class="form-group">
         <label>School: </label>
-        <input class="form-control" type="text" name="user[school]" placeholder="โรงเรียน" required>
+        <input class="form-control" type="text" name="school" placeholder="โรงเรียน" required>
       </div>
       <div class="form-group">
         <label>Grade: </label><br>
-        <select name="user[grade]" required>
+        <select name="grade" required>
           <option value="">เลือกระดับชั้น</option>
           <option value="4">ป.4</option>
           <option value="5">ป.5</option>
@@ -45,7 +97,9 @@
           <option value="11">ม.6</option>
         </select>
       </div>
-      <button class="btn btn-primary btn-block">Sign Up</button>
+      <input type="submit" value="Sign Up"
+      [disabled]="!f.form.valid || password.value !== password2.value"
+      class="btn btn-primary btn-block">
     </form>
   </div>
 </div>

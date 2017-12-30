@@ -9,7 +9,17 @@ var mongoose = require("mongoose");
 var middleware = require("./../../middleware");
 var method = require("./../../method");
 
-router.post("/videos/:videoCode", (req, res) => {
+router.get("/", middleware.isLoggedIn, (req, res) => {
+  var currentUser = req.user;
+  var user = {
+    firstName: currentUser.firstName,
+    lastName: currentUser.lastName,
+    image: currentUser.image
+  };
+  res.status(200).send(user);
+});
+
+router.post("/videos/:videoCode", middleware.isLoggedIn, (req, res) => {
   var start = req.body.start;
   var user = req.user;
   Video.populate(user, {path: "videos.video"}).then((user) => {
@@ -27,7 +37,7 @@ router.post("/videos/:videoCode", (req, res) => {
   });
 });
 
-router.put("/videos/:videoCode", (req, res) => {
+router.put("/videos/:videoCode", middleware.isLoggedIn, (req, res) => {
   var user = req.user;
   var done;
   var numFinishedVideos;
@@ -52,13 +62,13 @@ router.put("/videos/:videoCode", (req, res) => {
   });
 });
 
-router.get("/courses", async (req,res) => {
+router.get("/courses", middleware.isLoggedIn, async (req,res) => {
   var user = req.user;
   user = await Course.populate(user, {path: "courses.course"});
   res.status(200).send(user.courses);
 });
 
-router.get("/:courseCode/learn", async (req,res) => {
+router.get("/:courseCode/learn",  middleware.isLoggedIn, async (req,res) => {
   var user = req.user;
   user = await Course.populate(user, {path: "courses.course"});
   user = await Video.populate(user, {path: "videos.video"});
@@ -71,7 +81,7 @@ router.get("/:courseCode/learn", async (req,res) => {
   });
 });
 
-router.get("/orders", (req,res) => {
+router.get("/orders", middleware.isLoggedIn, (req,res) => {
   var user = req.user;
   Order.populate(user, {path: "orders", populate: {path:"course", select:"title _id"}}).then((user) => {
     res.status(200).send(user.orders);

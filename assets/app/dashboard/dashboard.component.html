@@ -1,19 +1,23 @@
 <div class="container my-4">
   <div class="row">
     <div class="col-md-3 col-sm-5 container nav-tab">
-      <div class="card-body sticky-top">
-        <div class="d-flex justify-content-center">
-          <div class="avatar"></div>
+      <ng-template [ngIf]="user">
+        <div class="card-body sticky-top">
+          <div class="d-flex justify-content-center">
+            <div class="avatar" [style.background-image]="getUrl('style')">
+              {{user.image? '':getInitials(user.firstName,user.lastName)}}
+            </div>
+          </div>
+          <h5 class="mt-2 text-center">{{user.firstName}} {{user.lastName}}</h5>
+          <hr>
+          <ul class="pl-0 text-center" style="list-style:none;">
+            <a routerLink="/dashboard"><li>Your Courses</li></a>
+            <a routerLink="/dashboard/edit"><li>Edit Profile</li></a>
+            <a routerLink="/dashboard/credit"><li>Credit Card Info</li></a>
+            <a routerLink="/dashboard/purchase"><li>Purchase History</li></a>
+          </ul>
         </div>
-        <h5 class="mt-2 text-center">Tas Yusoontorn</h5>
-        <hr>
-        <ul class="pl-0 text-center" style="list-style:none;">
-          <a routerLink="/dashboard"><li>Your Courses</li></a>
-          <a routerLink="/dashboard/edit"><li>Edit Profile</li></a>
-          <a routerLink="/dashboard/credit"><li>Credit Card Info</li></a>
-          <a routerLink="/dashboard/purchase"><li>Purchase History</li></a>
-        </ul>
-      </div>
+      </ng-template>
     </div>
     <div class="card-body col-md-9 col-sm-7 container">
       <router-outlet></router-outlet>

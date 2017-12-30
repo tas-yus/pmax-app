@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { OrderModule } from 'ngx-order-pipe';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent} from './header/header.component';
@@ -24,6 +25,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditProfileComponent } from './dashboard/edit-profile/edit-profile.component';
 import { CreditCardInfoComponent } from './dashboard/credit-card-info/credit-card-info.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { QAndAComponent } from './q-and-a/q-and-a.component';
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
@@ -49,13 +51,15 @@ import { AuthGuard } from './auth/auth-guard.service';
     PurchaseHistoryComponent,
     EditProfileComponent,
     CreditCardInfoComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    QAndAComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    OrderModule
   ],
   providers: [AuthService, AuthGuard],
   bootstrap: [AppComponent]

@@ -344,55 +344,106 @@ var parts = [
 var user = [
     {
         username: "tas",
-        isAdmin: true
+        isAdmin: true,
+        firstName: 'Tas',
+        lastName: 'Yusoontorn',
+        image: 'logo.png'
     },
     {
-        username: "audy"
+        username: "audy",
+        firstName: 'Audy',
+        lastName: 'Mulia',
+        image: 'logo.png'
     },
     {
         username: "alex",
+        firstName: 'Alex',
+        lastName: 'Zaheer',
+        image: 'logo.png'
     },
     {
-        username: "andre"
+        username: "andre",
+        firstName: 'Andre',
+        lastName: 'Saunders',
+        image: 'logo.png'
     },
     {
-        username: "sarah"
+        username: "sarah",
+        firstName: 'Sarah',
+        lastName: 'Jiang',
+        image: 'logo.png'
     },
     {
-        username: "edric"
+        username: "edric",
+        firstName: 'Edric',
+        lastName: 'Zeng',
+        image: 'logo.png'
     },
     {
-        username: "vincent"
+        username: "vincent",
+        firstName: 'Vincent',
+        lastName: 'Nicandro',
+        image: 'logo.png'
     },
     {
-        username: "maria"
+        username: "maria",
+        firstName: 'Maria',
+        lastName: 'Doerr',
+        image: 'logo.png'
     },
     {
-        username: "charlie"
+        username: "charlie",
+        firstName: 'Charlie',
+        lastName: 'Yang',
+        image: 'logo.png'
     },
     {
-        username: "willie"
+        username: "willie",
+        firstName: 'Willie',
+        lastName: 'Hercule',
+        image: 'logo.png'
     },
     {
-        username: "MAX"
+        username: "MAX",
+        firstName: 'Max',
+        lastName: 'Dumbell',
+        image: 'logo.png'
     },
     {
-        username: "tas31745"
+        username: "tas31745",
+        firstName: 'Tas',
+        lastName: 'Yusoontorn',
+        image: 'logo.png'
     },
     {
-        username: "big"
+        username: "big",
+        firstName: 'TK',
+        lastName: 'Kreetha',
+        image: 'logo.png'
     },
     {
-        username: "binSu"
+        username: "binSu",
+        firstName: 'Binbin',
+        lastName: 'Yosawapath',
+        image: 'logo.png'
     },
     {
-        username: "eminem"
+        username: "eminem",
+        firstName: 'Em',
+        lastName: 'AndM',
+        image: 'logo.png'
     },
     {
-        username: "Kinu"
+        username: "Kinu",
+        firstName: 'Kinu',
+        lastName: 'Reeve',
+        image: 'logo.png'
     },
     {
-        username: "Keane123"
+        username: "Keane123",
+        firstName: 'Keane',
+        lastName: '1987',
+        image: 'logo.png'
     }
 ];
 
@@ -657,10 +708,10 @@ function seedDB() {
                if (err) return console.log(err);
                vid.questions.push(q);
                q.video = vid;
-               Part.findOne({title: vid.part}, (err, part) => {
+               Part.findOne({title: vid.partTitle}, (err, part) => {
                    if (err) return console.log(err);
                    part.questions.push(q);
-                   Course.findOne({title: part.course}, (err, course) => {
+                   Course.findOne({title: part.courseTitle}, (err, course) => {
                         if (err) return console.log(err);
                         course.questions.push(q);
                         vid.save((err) => {
@@ -686,10 +737,10 @@ function seedDB() {
                if (err) return console.log(err);
                vid.questions.push(q);
                q.video = vid;
-                Part.findOne({title: vid.part}, (err, part) => {
+                Part.findOne({title: vid.partTitle}, (err, part) => {
                    if (err) return console.log(err);
                    part.questions.push(q);
-                   Course.findOne({title: part.course}, (err, course) => {
+                   Course.findOne({title: part.courseTitle}, (err, course) => {
                         if (err) return console.log(err);
                         course.questions.push(q);
                         vid.save((err) => {

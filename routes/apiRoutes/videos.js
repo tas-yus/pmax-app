@@ -26,7 +26,15 @@ router.get("/:vidCode", async (req, res) => {
     // var parts = await Video.populate(course.parts, {path: "videos"});
     try {
       var video = await Video.findOne({code: req.params.vidCode})
-        .populate("questions").populate("resources").populate("part").exec();
+        .populate({
+          path: "questions",
+          populate: [
+            {path: "author", select: "username", model:"User"},
+            {path: "answers", select: "createdAt author body", model:"Answer",
+              populate: {path: "author", select: "username", model: "User"}
+            }
+          ]
+        }).populate("resources").populate("part").exec();
       if (!video) return res.status(400).send({message: "No video"});
       res.status(200).send(video);
     } catch(err) {
@@ -41,7 +49,9 @@ router.get("/:vidCode", async (req, res) => {
     //       model: "User"
     //     }
     //   }).exec();
-    // var user = req.user;
+    // var questions = await User.populate(video.questions, {path: "author", select: "username"});
+    // questions = await Answer.populate(questions, {path: "answers", select: "author body"});
+    // questions = await User.populate(questions, {path: "answers.author", select: "username", model: User});
     // if (!user.isAdmin) {
     //   method.getCourseInArrayById(user.courses, course._id).mostRecentVideo = {video};
     // }

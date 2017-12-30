@@ -3,12 +3,17 @@
     <div class="jumbotron">
       <div class="container d-flex justify-content-between">
         <div class="col-sm-6 intro-video">
-          <iframe width="100%" style="height: 200px" [src]='sanitizer.bypassSecurityTrustResourceUrl(course.video)' frameborder="0" allowfullscreen></iframe>
+          <iframe width="100%" style="height: 200px" [src]='getUrl()' frameborder="0" allowfullscreen></iframe>
         </div>
         <div class="col-sm-6 ml-3">
           <h2>Learn {{course.title}}</h2>
-          <a href="#" class="btn btn-lg btn-primary my-3 course-status">
-            {{user.courseBundle.numFinishedVideos === course.numVideos? course.title + ' completed': 'Continue to lecture _'}}
+          <a routerLink="/courses/{{course.code}}/learn" *ngIf="user.courseBundle.numFinishedVideos === course.numVideos"
+          class="btn btn-lg btn-primary my-3">
+            {{course.title}} completed
+          </a>
+          <a routerLink="" *ngIf="user.courseBundle.numFinishedVideos !== course.numVideos"
+          class="btn btn-lg btn-primary my-3">
+             Continue to lecture _
           </a>
           <p class="progress-caption"><span id="num-finished-videos" #numFinishedVideos>{{user.courseBundle.numFinishedVideos}}</span> of {{course.numVideos}} items complete</p>
           <div class="progress">

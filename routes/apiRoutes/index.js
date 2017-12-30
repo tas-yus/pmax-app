@@ -14,7 +14,7 @@ var async = require("async");
 // LOGIN
 
 // middleware.noDuplicateLogin, middleware.checkRememberMe
-router.post("/login", middleware.checkRememberMe, passport.authenticate("local"), (req, res) => {
+router.post("/login", middleware.checkLoginValidity, middleware.checkRememberMe, passport.authenticate("local"), (req, res) => {
   res.status(200).send(req.user);
 });
 
@@ -138,6 +138,19 @@ router.post("/checkout", (req,res) => {
         return res.status(400).send({err, message: "Something went wrong"});
       }
       res.status(200).send({message: "Checked Out"})
+    });
+  });
+});
+
+router.post("/register", middleware.checkRegisterValidity, (req, res) => {
+  var newUser = new User(req.body.user);
+  newUser.username = req.body.username;
+  User.register(newUser, req.body.password, (err, user) => {
+    if (err) {
+      return res.status(400).send({err, message: "Something went wrong"});
+    }
+    passport.authenticate("local")(req, res, () => {
+       res.status(201).send(req.user);
     });
   });
 });

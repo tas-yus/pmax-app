@@ -1,0 +1,110 @@
+<!-- <% vid.resources.forEach((res) => { %>
+       <a href="/assets/resources/<%= res.path %>" download>Download <%= res.title %></a><br>
+       <% if(user.isAdmin) { %>
+           <form action="/courses/<%= courseCode %>/parts/<%= partCode %>/videos/<%= vid.code %>/resources/<%= res.code %>?_method=DELETE" method="POST">
+               <button><i class="fa fa-times" aria-hidden="true"></i></button>
+           </form>
+       <% } %>
+   <% }) %>
+<% if(user.isAdmin) { %>
+   <form action="/courses/<%= courseCode %>/parts/<%= partCode %>/videos/<%= vid.code %>?_method=DELETE" method="POST">
+       <button class="btn btn-danger">Delete Video</button>
+   </form>
+   <form action="/courses/<%= courseCode %>/parts/<%= partCode %>/videos/<%= vid.code %>/resources/new" method="GET">
+       <button class="btn btn-success">Add Resource</button>
+   </form>
+   <br>
+<% } %> -->
+<div class="d-flex justify-content-between">
+  <h3 class="mt-2">Questions</h3>
+  <button (click)="showAskQuestion = !showAskQuestion" *ngIf="!showAskQuestion" class="btn btn-sm btn-info my-2" type="button">
+      Ask <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+  </button>
+  <button (click)="showAskQuestion = !showAskQuestion" *ngIf="showAskQuestion" class="btn btn-sm btn-info my-2" type="button">
+      Hide <i class="fa fa-question-circle-o" aria-hidden="true"></i>
+  </button>
+</div>
+<hr>
+<div *ngIf="questions.length === 0 && !showAskQuestion">
+  <div class="text-center">
+    <h6>No questions to show</h6>
+  </div>
+</div>
+<div *ngIf="showAskQuestion">
+  <div id="askQuestion">
+    <form (ngSubmit)="onAskQuestion(f)" #f="ngForm">
+      <div class="form-group">
+        <label>Title:</label>
+        <input class="form-control" type="text" name="title" maxlength="50" ngModel required #title="ngModel">
+        <span class="invalid-feedback" *ngIf="!title.valid && title.touched">
+          *Please enter a title
+        </span>
+      </div>
+      <div class="form-group">
+        <label>Question:</label>
+        <textarea class="form-control" type="text" name="body" rows="10" ngModel required #body="ngModel"></textarea>
+        <span class="invalid-feedback" *ngIf="!body.valid && body.touched">
+          *Type your question
+        </span>
+      </div>
+      <div class="text-right">
+        <button [disabled]="!f.form.valid" class="btn btn-primary" id="question-btn">Ask New Question</button>
+      </div>
+    </form>
+  </div>
+  <hr>
+</div>
+<ng-template [ngIf]="questions.length !== 0">
+  <div class="questions">
+    <div class="my-3" *ngFor="let question of questions | orderBy: createdAt: true; let i = index">
+      <div class="card">
+        <div class="card-header d-flex align-items-center">
+          <div style="flex-grow: 0; width: 40px"class="avatar mr-2">
+            TY
+          </div>
+          <div class="d-flex flex-column ml-2">
+            <h5 class="question-title">
+              {{question.title}}
+            </h5>
+            <p class="m-0 text-muted question-date">
+              {{question.author.username}} ({{getDate(question.createdAt)}})
+            </p>
+          </div>
+        </div>
+        <div class="question-body">
+          <div class="card-body pb-1">
+            <p>{{question.body}}</p>
+            <div class="text-right">
+              <a style="cursor:pointer" class="text-primary noselect" (click)="showReply[i] = !showReply[i]">
+                {{!showReply[i]? 'Reply' : 'Hide'}} <i class="fa fa-reply pl-2" aria-hidden="true"></i>
+              </a>
+            </div>
+          </div>
+          <div class="reply mb-3">
+            <div class="container" *ngIf="showReply[i]">
+              <form (ngSubmit)="onReply(f, question.code, i)" #f="ngForm">
+                <div class="form-group">
+                  <textarea class="form-control" type="text" name="answerBody" ngModel required></textarea>
+                </div>
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-sm btn-primary" id="question-btn">Reply</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div *ngIf="question.answers.length !== 0" class="answers px-2">
+            <hr>
+            <div class="ml-4 d-flex align-items-center" *ngFor="let answer of question.answers | orderBy: createdAt: true">
+              <div style="flex-grow: 0; width: 40px; background: url('https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/00/005ce9622f98deadcb61ad1a33ceaed22ce12571.jpg')"class="avatar mr-2">
+              </div>
+              <div style="flex-grow: 2; width: 250px" class="card-header bg-light py-1 my-2">
+                <p class="answer-body pt-2">{{answer.body}}</p>
+                <footer class="blockquote-footer text-right question-date">{{answer.author.username}} ({{getDate(answer.createdAt)}})</footer>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

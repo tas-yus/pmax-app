@@ -35,6 +35,7 @@
 .top-level {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .left-side {
@@ -79,6 +80,8 @@
 
 .videoVolumeBar {
   flex-basis: 20%;
+  max-width: 120px;
+  padding-bottom: 5px;
 }
 
 .videoLabels {
@@ -239,7 +242,9 @@ a:focus {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
-  height: 15px;
+  height: 8px;
+  -webkit-transition: all .2s;
+  transition: all 0.2s;
 }
 
 #progress-bar::-webkit-progress-bar {
@@ -248,21 +253,21 @@ a:focus {
 }
 
 #progress-bar[value]::-webkit-progress-value {
-  background-image:
+  background-color: #429bf4;
+  /*background-image:
   -webkit-linear-gradient(-45deg,
                           transparent 33%, rgba(0, 0, 0, .1) 33%,
                           rgba(0,0, 0, .1) 66%, transparent 66%),
   -webkit-linear-gradient(top,
                           rgba(255, 255, 255, .25),
                           rgba(0, 0, 0, .25)),
-  -webkit-linear-gradient(left, #09c, #429bf4);
+  -webkit-linear-gradient(left, #09c, #429bf4);*/
  border-radius: 4px;
  background-size: 35px 20px, 100% 100%, 100% 100%;
  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
 #volume-bar {
-  height: 10px;
   margin-bottom: 6px;
 }
 
@@ -272,18 +277,25 @@ a:focus {
 }
 
 #volume-bar[value]::-webkit-progress-value {
-  background-image:
+  background-color: #429bf4;
+  /*background-image:
   -webkit-linear-gradient(-45deg,
                           transparent 33%, rgba(0, 0, 0, .1) 33%,
                           rgba(0,0, 0, .1) 66%, transparent 66%),
   -webkit-linear-gradient(top,
                           rgba(255, 255, 255, .25),
                           rgba(0, 0, 0, .25)),
-  -webkit-linear-gradient(left, #09c, #429bf4);
+  -webkit-linear-gradient(left, #09c, #429bf4);*/
 
  border-radius: 4px;
  background-size: 35px 20px, 100% 100%, 100% 100%;
  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+#progress-bar:hover {
+  height: 12px;
+  -webkit-transition: all .2s;
+  transition: all 0.2s;
 }
 
 video::-webkit-media-controls-enclosure {
@@ -489,4 +501,58 @@ video:-webkit-full-screen {
   margin: auto !important;
   width: 20px !important;
   flex: 0 0 0% !important;
+}
+
+ul.dropdown-menu.show {
+  padding-left: 10px;
+  width: 50px;
+}
+
+.bottom-level a {
+  cursor: pointer;
+}
+
+a.text-special {
+  color: #cfcfcf;
+}
+
+a.text-special:hover {
+  color: #bfbfbf;
+}
+
+.scrubber {
+  position: absolute;
+  left: 7px;
+  top: 14px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+}
+
+.videoSeekBar:hover div.scrubber {
+  top: 10px;
+  width: 18px;
+  height: 18px;
+  -webkit-transition: all .2s;
+  transition: all 0.2s;
+}
+
+.videoSeekBar:hover #progress-bar {
+  height: 12px;
+  -webkit-transition: all .2s;
+  transition: all 0.2s;
+}
+
+#progress-bar, #volume-bar {
+  cursor: pointer;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }

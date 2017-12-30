@@ -1,0 +1,54 @@
+footer {
+  font-size: 15px;
+}
+
+h5 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.avatar {
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  text-align: center;
+  border-radius: 50%; /* may require vendor prefixes */
+  border: 0.5px solid black;
+  background-size: cover;
+  /*box-shadow: 1px 1px 2px #bbb;*/
+}
+
+.answer-body {
+  font-size: 14px;
+}
+
+.question-title {
+  font-size: 16px;
+}
+
+.question-body .card-body {
+  font-size: 15px;
+}
+
+#askQuestion {
+  margin: 0 auto;
+  max-width: 600px;
+}
+
+.invalid-feedback {
+  display: block;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.question-date {
+  font-size: 14px;
+}
