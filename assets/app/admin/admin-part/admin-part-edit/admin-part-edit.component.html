@@ -1,0 +1,47 @@
+<div *ngIf="part">
+  <h4 class="mb-4">Edit {{part.title}}</h4>
+  <form (ngSubmit)="onEditPart(f)" #f="ngForm">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Title: </label>
+      <div class="col-sm-9">
+        <input class="form-control" type="text" name="title" placeholder="ชื่อคอร์ส" [(ngModel)]="part.title">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Description: </label>
+      <div class="col-sm-9">
+        <textarea name="description" class="form-control" placeholder="คำบรรยายบท" [(ngModel)]="part.description"></textarea>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Image: </label>
+      <div class="col-sm-5">
+        <img style="width: 100%" src="/assets/images/{{part.image}}" alt="{{part.image}}">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Upload Image: </label>
+      <div class="col-sm-9">
+        <input class="form-control-file" (change)="onChange($event, file)" type="file" name="image" #fileUpload ngModel>
+        <span class="invalid-feedback" *ngIf="errMessage">
+          *Please upload file no bigger than 2mb with .jpg or .png extension
+        </span>
+      </div>
+    </div>
+    <!-- <div class="form-group row">
+      <label class="col-sm-3 col-form-label">File Name (opt.): </label>
+      <div class="col-sm-9">
+        <input class="form-control" #fileName="ngModel" type="text" name="fileName" placeholder="file name (no extension)" ngModel>
+      </div>
+    </div> -->
+    <label>Old Images: </label>
+    <div class="form group row">
+      <div *ngFor="let image of images; let i = index" class="col-xl-2 col-lg-3 col-md-4 col-sm-6 my-3">
+        <img style="width:100%" src="/assets/images/{{image}}" alt="{{image}}"
+        (click)="selectImage(image); toggleSelect(i)">
+        <i class="fa fa-2x check-on-image {{selectImages[i]? 'fa-check-circle-o': ''}}" aria-hidden="true"></i>
+      </div>
+    </div>
+    <button class="btn btn-primary pull-right">Edit</button>
+  </form>
+</div>

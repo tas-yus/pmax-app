@@ -4,17 +4,21 @@
       <ng-template [ngIf]="user">
         <div class="card-body sticky-top">
           <div class="d-flex justify-content-center">
-            <div class="avatar" [style.background-image]="getUrl('style')">
-              {{user.image? '':getInitials(user.firstName,user.lastName)}}
-            </div>
+            <avatar [user]=user></avatar>
           </div>
           <h5 class="mt-2 text-center">{{user.firstName}} {{user.lastName}}</h5>
           <hr>
           <ul class="pl-0 text-center" style="list-style:none;">
-            <a routerLink="/dashboard"><li>Your Courses</li></a>
-            <a routerLink="/dashboard/edit"><li>Edit Profile</li></a>
-            <a routerLink="/dashboard/credit"><li>Credit Card Info</li></a>
-            <a routerLink="/dashboard/purchase"><li>Purchase History</li></a>
+            <ng-template [ngIf]="!user.isAdmin">
+              <a routerLink="/dashboard"><li>Your Courses</li></a>
+              <a routerLink="/dashboard/edit"><li>Edit Profile</li></a>
+              <a routerLink="/dashboard/credit"><li>Credit Card Info</li></a>
+              <a routerLink="/dashboard/purchase"><li>Purchase History</li></a>
+            </ng-template>
+            <!-- <ng-template [ngIf]="user.isAdmin">
+              <a routerLink="/dashboard/edit"><li>Edit Profile</li></a>
+              <a routerLink="/dashboard"><li>Your Questions</li></a>
+            </ng-template> -->
           </ul>
         </div>
       </ng-template>

@@ -1,0 +1,17 @@
+<div class="card my-2" *ngIf="video">
+  <div class="card-header text-white bg-dark d-flex justify-content-between">
+    <h4><span class="tiny">{{video.title}}</span></h4>
+    <a routerLink="/admin/videos/{{video._id}}/edit" class="text-white mt-1">Edit Video</a>
+  </div>
+  <div class="card-body">
+    <div class="mb-3">
+      <a class="text-dark" style="text-decoration:none;" routerLink="/admin/courses/{{video.course._id}}">
+        <p><span class="text-primary font-weight-bold">Course: </span>{{video.course.title}}</p>
+      </a>
+      <a class="text-dark" style="text-decoration:none;" routerLink="/admin/parts/{{video.part._id}}">
+        <p><span class="text-primary font-weight-bold">Part: </span>{{video.part.title}}</p>
+      </a>
+    </div>
+    <video style="width: 50%" src="/assets/videos/{{video.path}}" controls></video>
+  </div>
+</div>

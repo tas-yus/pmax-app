@@ -32,6 +32,7 @@ var config = require("./config");
 // var resourceRoutes = require("./routes/resources");
 // var questionRoutes = require("./routes/questions");
 // var answerRoutes = require("./routes/answers");
+var adminApiRoutes = require("./routes/apiRoutes/admin");
 var indexApiRoutes = require("./routes/apiRoutes/index");
 var courseApiRoutes = require("./routes/apiRoutes/courses");
 var partApiRoutes = require("./routes/apiRoutes/parts");
@@ -44,6 +45,7 @@ var videoApiRoutes = require("./routes/apiRoutes/videos");
 
 mongoose.Promise = Promise;
 mongoose.connect("mongodb://localhost:27017/pmaxapp", {useMongoClient: true});
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
@@ -106,6 +108,7 @@ app.use(async function(req, res, next) {
 // app.use("/courses/:courseCode", questionRoutes);
 // app.use("/courses/:courseCode/parts/:partCode/videos/:vidCode/questions/:questionCode/answers", answerRoutes);
 app.use("/api", indexApiRoutes);
+app.use("/api/admin", adminApiRoutes);
 app.use("/api/courses", courseApiRoutes);
 app.use("/api/courses/:courseCode/parts", partApiRoutes);
 app.use("/api/courses/:courseCode", questionApiRoutes);

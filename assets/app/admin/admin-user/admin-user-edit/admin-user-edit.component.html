@@ -1,0 +1,6 @@
+<div *ngIf="user">
+  <h4 class="mb-4">Edit {{user.username}}</h4>
+  <form (ngSubmit)="onEditUser(f)" #f="ngForm">
+    <button class="btn btn-primary pull-right">Edit</button>
+  </form>
+</div>

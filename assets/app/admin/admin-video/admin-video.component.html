@@ -1,0 +1,20 @@
+<div class="card my-2" *ngFor="let video of videos; let i = index">
+  <div class="card-header text-white bg-dark d-flex justify-content-between">
+    <a class="text-white" style="text-decoration:none;" routerLink="/admin/videos/{{video._id}}">
+      <h4>{{i+1}}. <span class="tiny">{{video.title}}</span></h4>
+    </a>
+    <a routerLink="/admin/videos/{{video._id}}/edit" class="text-white mt-1">Edit Video</a>
+  </div>
+  <div class="card-body">
+    <div class="mb-3">
+      <a class="text-dark" style="text-decoration:none;" routerLink="/admin/courses/{{video.course._id}}">
+        <p><span class="text-primary font-weight-bold">Course: </span>{{video.course.title}}</p>
+      </a>
+      <a class="text-dark" style="text-decoration:none;" routerLink="/admin/parts/{{video.part._id}}">
+        <p><span class="text-primary font-weight-bold">Part: </span>{{video.part.title}}</p>
+      </a>
+      <button class="btn btn-primary" (click)="showVideos[i] = !showVideos[i]">{{!showVideos[i]? 'See Video' : 'Hide Video'}}</button>
+    </div>
+    <video style="width: 50%" src="/assets/videos/{{video.path}}" *ngIf="showVideos[i]" controls></video>
+  </div>
+</div>

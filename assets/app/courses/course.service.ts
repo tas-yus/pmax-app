@@ -22,6 +22,8 @@ export class CourseService {
     }, (err) => {
       if (err.status === 401) {
         this.router.navigate([`/courses/${courseCode}/learn`]);
+      } else if (err.status === 400) {
+        this.router.navigate(['/courses']);
       }
     });
   }

@@ -1,0 +1,51 @@
+<div class="card my-2" *ngFor="let user of users; let i = index">
+  <div class="card-header text-white bg-dark d-flex justify-content-between">
+    <a class="text-white" style="text-decoration:none;" routerLink="/admin/users/{{user._id}}">
+      <h4>{{i+1}}. <span class="tiny">{{user.username}}</span></h4>
+    </a>
+    <a routerLink="/admin/users/{{user._id}}/edit" class="text-white mt-1">Edit User</a>
+  </div>
+  <div class="card-body">
+    <p><span class="text-primary font-weight-bold">Name: </span> {{user.firstName}} {{user.lastName}}</p>
+    <button class="btn btn-sm btn-primary" *ngIf="!showCourses[i]" (click)="showCourses[i] = !showCourses[i]; showQuestions[i] = false">
+      Show Courses <i class="fa fa-folder-open" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-sm btn-primary" *ngIf="showCourses[i]" (click)="showCourses[i] = !showCourses[i]">
+      Hide Courses <i class="fa fa-folder-open" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-sm btn-primary" *ngIf="!showQuestions[i]"
+    (click)="showQuestions[i] = !showQuestions[i]; showCourses[i] = false">
+      Show Questions <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-sm btn-primary" *ngIf="showQuestions[i]"
+    (click)="showQuestions[i] = !showQuestions[i]">
+      Hide Questions <i class="fa fa-question-circle" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div *ngIf="showCourses[i]">
+    <div class="pl-4" *ngFor="let course of user.courses; let j = index">
+      <div class="card-header d-flex justify-content-between">
+        <a class="text-dark" style="text-decoration:none;" routerLink="/admin/courses/{{course.course._id}}">
+          <h6>{{j+1}}. {{course.course.title}}</h6>
+        </a>
+        <a routerLink="/admin/courses/{{course.course._id}}/edit" class="mt-1">Edit Course</a>
+      </div>
+      <div class="card-body">
+        <p class="text-danger font-weight-bold" *ngIf="course.expired">Expired!</p>
+        <p><span class="text-primary font-weight-bold">Expired At: </span>{{course.expiredAt}}</p>
+        <a routerLink="/admin/courses/{{course.course._id}}/edit" *ngIf="course.expired" class="mt-1">Extend for 2 months</a>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showQuestions[i]">
+    <div class="pl-4" *ngFor="let question of user.questions; let j = index">
+      <div class="card-header d-flex justify-content-between">
+        <h6>{{j+1}}. {{question.title}}</h6>
+        <!-- <a routerLink="/admin/courses/{{course.course._id}}/edit" class="mt-1">Edit Course</a> -->
+      </div>
+      <div class="card-body">
+        <p>{{question.body}}</p>
+      </div>
+    </div>
+  </div>
+</div>

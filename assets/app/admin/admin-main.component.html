@@ -1,0 +1,70 @@
+<div class="container my-4">
+  <div class="row">
+    <div class="col-md-3 col-sm-5 container nav-tab">
+      <ng-template [ngIf]="user">
+        <div class="card-body sticky-top">
+          <div class="d-flex justify-content-center">
+            <avatar [user]="user"></avatar>
+          </div>
+          <h5 class="mt-2 text-center">{{user.firstName}} {{user.lastName}}</h5>
+          <hr>
+          <ul class="pl-0 text-center" style="list-style:none;">
+            <a routerLink="/admin/courses"><li>Manage Courses</li></a>
+            <a routerLink="/admin/parts"><li>Manage Parts</li></a>
+            <a routerLink="/admin/videos"><li>Manage Videos</li></a>
+            <a routerLink="/admin/users"><li>Manage Users</li></a>
+          </ul>
+        </div>
+      </ng-template>
+    </div>
+    <div class="card-body col-md-9 col-sm-7 container">
+      <h3>Search</h3>
+      <form class="my-3" action="">
+        <div class="form-group"></div>
+        <input class="form-control" id="searchInput" (input)="searchFor(search.value)" type="text" name="text"
+        placeholder="Search..." #search ngModel tabindex="1" autocomplete="off">
+        <ng-template [ngIf]="results && !isEmpty(results)">
+          <div class="ds-dropdown-menu mt-2 noselect
+          {{isEmpty(results)? 'noborder': ''}}">
+            <div *ngFor="let course of results.courses; let i = index">
+              <div class="dropdown-item">
+                <a routerLink="/admin/courses/{{course._id}}">
+                  <p *ngIf="i === 0" class="mb-2 font-weight-bold text-dark">Course</p>
+                  <p>{{course.title}}</p>
+                </a>
+              </div>
+            </div>
+            <div *ngFor="let part of results.parts; let i = index">
+              <div *ngIf="i === 0 && results.courses" class="dropdown-divider"></div>
+              <div class="dropdown-item">
+                <a routerLink="/admin/parts/{{part._id}}">
+                  <p *ngIf="i === 0" class="mb-2 font-weight-bold text-dark">Part</p>
+                  <p>{{part.title}}</p>
+                </a>
+              </div>
+            </div>
+            <div *ngFor="let video of results.videos; let i = index">
+              <div *ngIf="i === 0 && (results.courses || results.parts)" class="dropdown-divider"></div>
+              <div class="dropdown-item">
+                <a routerLink="/admin/videos/{{video._id}}">
+                  <p *ngIf="i === 0" class="mb-2 font-weight-bold text-dark">Video</p>
+                  <p>{{video.title}}</p>
+                </a>
+              </div>
+            </div>
+            <div *ngFor="let user of results.users; let i = index">
+              <div *ngIf="i === 0 && (results.courses || results.parts || results.videos)" class="dropdown-divider"></div>
+              <div class="dropdown-item">
+                <a routerLink="/admin/users/{{user._id}}">
+                  <p *ngIf="i === 0" class="mb-2 font-weight-bold text-dark">User</p>
+                  <p>{{user.username}}</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </form>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

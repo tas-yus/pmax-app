@@ -1,0 +1,21 @@
+.avatar {
+  height: 100px;
+  width: 100px;
+  line-height: 100px;
+  text-align: center;
+  border-radius: 50%; /* may require vendor prefixes */
+  margin: 0 auto;
+  border: 0.5px solid black;
+  background-size: cover;
+  box-shadow: 1px 1px 2px #bbb;
+}
+
+.course-avatar {
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%; /* may require vendor prefixes */
+  margin: 0 auto;
+  background-size: cover;
+}

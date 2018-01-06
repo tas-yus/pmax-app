@@ -1,0 +1,11 @@
+<ng-template [ngIf]="user">
+  <div class="avatar" [style.background-image]="getUrl('style', user.image)">
+    {{user.image? '':getInitials(user.firstName,user.lastName)}}
+  </div>
+</ng-template>
+<ng-template [ngIf]="course">
+  <div class="course-avatar" [style.background-image]="getUrl('style', course.image)"></div>
+</ng-template>
+<ng-template [ngIf]="part">
+  <div class="course-avatar" [style.background-image]="getUrl('style', part.image)"></div>
+</ng-template>

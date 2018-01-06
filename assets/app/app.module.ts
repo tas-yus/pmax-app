@@ -26,9 +26,24 @@ import { EditProfileComponent } from './dashboard/edit-profile/edit-profile.comp
 import { CreditCardInfoComponent } from './dashboard/credit-card-info/credit-card-info.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { QAndAComponent } from './q-and-a/q-and-a.component';
+import { AdminMainComponent } from './admin/admin-main.component';
+import { AdminCourseComponent } from './admin/admin-course/admin-course.component';
+import { AdminUserComponent } from './admin/admin-user/admin-user.component';
+import { AdminPartComponent } from './admin/admin-part/admin-part.component';
+import { AdminVideoComponent } from './admin/admin-video/admin-video.component';
+import { AdminCourseDetailComponent } from './admin/admin-course/admin-course-detail/admin-course-detail.component';
+import { AdminPartDetailComponent } from './admin/admin-part/admin-part-detail/admin-part-detail.component';
+import { AdminVideoDetailComponent } from './admin/admin-video/admin-video-detail/admin-video-detail.component';
+import { AdminUserDetailComponent } from './admin/admin-user/admin-user-detail/admin-user-detail.component';
+import { AdminCourseEditComponent } from './admin/admin-course/admin-course-edit/admin-course-edit.component';
+import { AdminPartEditComponent } from './admin/admin-part/admin-part-edit/admin-part-edit.component';
+import { AdminVideoEditComponent } from './admin/admin-video/admin-video-edit/admin-video-edit.component';
+import { AdminUserEditComponent } from './admin/admin-user/admin-user-edit/admin-user-edit.component';
+import { AvatarComponent } from './misc/avatar/avatar.component';
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
+import { AdminGuard } from './auth/admin-guard.service';
 
 @NgModule({
   declarations: [
@@ -52,7 +67,21 @@ import { AuthGuard } from './auth/auth-guard.service';
     EditProfileComponent,
     CreditCardInfoComponent,
     NotFoundComponent,
-    QAndAComponent
+    QAndAComponent,
+    AvatarComponent,
+    AdminMainComponent,
+    AdminCourseComponent,
+    AdminCourseDetailComponent,
+    AdminCourseEditComponent,
+    AdminPartComponent,
+    AdminPartDetailComponent,
+    AdminPartEditComponent,
+    AdminVideoComponent,
+    AdminVideoDetailComponent,
+    AdminVideoEditComponent,
+    AdminUserComponent,
+    AdminUserDetailComponent,
+    AdminUserEditComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +90,7 @@ import { AuthGuard } from './auth/auth-guard.service';
     FormsModule,
     OrderModule
   ],
-  providers: [AuthService, AuthGuard],
+  providers: [AuthService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]
 })
 

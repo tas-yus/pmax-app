@@ -14,7 +14,8 @@ router.get("/", middleware.isLoggedIn, (req, res) => {
   var user = {
     firstName: currentUser.firstName,
     lastName: currentUser.lastName,
-    image: currentUser.image
+    image: currentUser.image,
+    isAdmin: currentUser.isAdmin
   };
   res.status(200).send(user);
 });

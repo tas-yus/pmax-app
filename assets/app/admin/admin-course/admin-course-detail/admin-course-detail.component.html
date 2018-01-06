@@ -1,0 +1,57 @@
+<div class="card my-2" *ngIf="course">
+  <div class="card-header text-white bg-dark d-flex justify-content-between">
+    <h4><span class="tiny">{{course.title}}</span></h4>
+    <a routerLink="/admin/courses/{{course._id}}/edit" class="text-white mt-1">Edit Course</a>
+  </div>
+  <div class="card-body">
+    <div class="row my-2">
+      <div class="col-sm-4">
+        <img style="width:100%" src="/assets/images/{{course.image}}" alt="{{course.image}}">
+      </div>
+      <div class="col-sm-8">
+        <p><span class="text-primary font-weight-bold">Price: </span> {{course.price}} บาท</p>
+        <p><span class="text-primary font-weight-bold">Description: </span> {{course.description}}</p>
+      </div>
+    </div>
+    <button class="btn btn-sm btn-primary" *ngIf="!showParts.show" (click)="showParts.show = !showParts.show">
+      Show Parts <i class="fa fa-folder-open" aria-hidden="true"></i>
+    </button>
+    <button class="btn btn-sm btn-primary" *ngIf="showParts.show" (click)="showParts.show = !showParts.show">
+      Hide Parts <i class="fa fa-folder-open" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div *ngIf="showParts.show">
+    <div class="pl-4" *ngFor="let part of course.parts; let j = index">
+      <div class="card-header d-flex justify-content-between">
+        <a class="text-dark" style="text-decoration:none;" routerLink="/admin/parts/{{part._id}}">
+          <h6>{{j+1}}. {{part.title}}</h6>
+        </a>
+        <a routerLink="/admin/parts/{{part._id}}/edit" class="mt-1">Edit Part</a>
+      </div>
+      <div class="card-body">
+        <p>{{part.description}}</p>
+        <button class="btn btn-sm btn-primary" *ngIf="!showParts.parts[j]"
+        (click)="showParts.parts[j] = !showParts.parts[j]">
+          Show Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-sm btn-primary" *ngIf="showParts.parts[j]"
+        (click)="showParts.parts[j] = !showParts.parts[j]">
+          Hide Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
+        </button>
+      </div>
+      <div *ngIf="showParts.parts[j]">
+        <div class="pl-4" *ngFor="let video of part.videos; let k = index">
+          <div class="card-header d-flex justify-content-between">
+            <a class="text-dark" style="text-decoration:none;" routerLink="/admin/videos/{{video._id}}">
+              <h6>{{k+1}}. {{video.title}}</h6>
+            </a>
+            <a routerLink="/admin/videos/{{video._id}}/edit" class="mt-1">Edit Video</a>
+          </div>
+          <div class="card-body">
+            <video style="width: 50%" src="/assets/videos/{{video.path}}" controls></video>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

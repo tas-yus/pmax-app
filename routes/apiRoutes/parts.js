@@ -51,7 +51,7 @@ router.get("/:id", (req, res) => {
   });
 });
 
-// CREATE PART
+// CREATE PAR
 router.post("/", middleware.isLoggedIn, middleware.isAdmin, (req, res) => {
   if (!req.body.title) {
     return res.status(400).send("โปรดใส่ชื่อบท");
