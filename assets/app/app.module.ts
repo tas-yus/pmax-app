@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { OrderModule } from 'ngx-order-pipe';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent} from './header/header.component';
@@ -24,6 +25,7 @@ import { PurchaseHistoryComponent } from './dashboard/purchase-history/purchase-
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { EditProfileComponent } from './dashboard/edit-profile/edit-profile.component';
 import { CreditCardInfoComponent } from './dashboard/credit-card-info/credit-card-info.component';
+import { YourQuestionComponent } from './dashboard/your-question/your-question.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { QAndAComponent } from './q-and-a/q-and-a.component';
 import { AdminMainComponent } from './admin/admin-main.component';
@@ -66,6 +68,7 @@ import { AdminGuard } from './auth/admin-guard.service';
     PurchaseHistoryComponent,
     EditProfileComponent,
     CreditCardInfoComponent,
+    YourQuestionComponent,
     NotFoundComponent,
     QAndAComponent,
     AvatarComponent,
@@ -88,7 +91,8 @@ import { AdminGuard } from './auth/admin-guard.service';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    OrderModule
+    OrderModule,
+    FilterPipeModule
   ],
   providers: [AuthService, AuthGuard, AdminGuard],
   bootstrap: [AppComponent]

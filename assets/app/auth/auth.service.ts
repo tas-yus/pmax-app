@@ -41,4 +41,20 @@ export class AuthService {
   isAuthenticated() {
     return sessionStorage.getItem('currentUser') !== null;
   }
+
+  isAdmin() {
+    if (!this.isAuthenticated()) {
+      return false;
+    } else {
+      return JSON.parse(sessionStorage.getItem('currentUser')).isAdmin;
+    }
+  }
+
+  isInstructor() {
+    if (!this.isAuthenticated()) {
+      return false;
+    } else {
+      return JSON.parse(sessionStorage.getItem('currentUser')).isInstructor;
+    }
+  }
 }

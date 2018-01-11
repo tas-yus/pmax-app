@@ -39,9 +39,13 @@ export class VideoComponent implements OnInit {
         this.user = data;
       }, (err) => {
         if (err.status === 401) {
-          // this.router.navigate([`/dashboard`]);
+          this.router.navigate([`/dashboard`]);
         }
       });
+    }, (err) => {
+      if (err.status === 401) {
+        this.router.navigate([`/dashboard`]);
+      }
     });
     const partCode = this.route.snapshot.params['partCode'];
     this.route.params.subscribe(params => {

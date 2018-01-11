@@ -5,6 +5,7 @@ var Course = require("./../../models/course");
 var Part = require("./../../models/part");
 var Order = require("./../../models/order");
 var Video = require("./../../models/video");
+var Question = require("./../../models/question");
 var mongoose = require("mongoose");
 var middleware = require("./../../middleware");
 var method = require("./../../method");
@@ -15,7 +16,8 @@ router.get("/", middleware.isLoggedIn, (req, res) => {
     firstName: currentUser.firstName,
     lastName: currentUser.lastName,
     image: currentUser.image,
-    isAdmin: currentUser.isAdmin
+    isAdmin: currentUser.isAdmin,
+    isInstructor: currentUser.isInstructor
   };
   res.status(200).send(user);
 });
@@ -86,6 +88,42 @@ router.get("/orders", middleware.isLoggedIn, (req,res) => {
   var user = req.user;
   Order.populate(user, {path: "orders", populate: {path:"course", select:"title _id"}}).then((user) => {
     res.status(200).send(user.orders);
+  }).catch((err) => {
+    res.status(400).send({err, message: "Something went wrong"})
+  })
+});
+
+router.get("/questions", middleware.isLoggedIn, (req,res) => {
+  var user = req.user;
+  var populateObject = {
+    path: "questions",
+    populate: [
+      {
+        path: "answers",
+        select: "body author _id",
+        populate: {
+          path: "author",
+          select: "username image isInstructor"
+        }
+      },
+      {
+        path: "video",
+        select: "code part course",
+        populate: [
+          {
+            path: "part",
+            select: "code"
+          },
+          {
+            path: "course",
+            select: "code"
+          }
+        ]
+      }
+    ]
+  };
+  Question.populate(user, populateObject).then((user) => {
+    res.status(200).send(user.questions);
   }).catch((err) => {
     res.status(400).send({err, message: "Something went wrong"})
   })

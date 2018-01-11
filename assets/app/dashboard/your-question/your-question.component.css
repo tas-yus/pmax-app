@@ -1,0 +1,19 @@
+.answer {
+  border-bottom: 1px solid #eee;
+}
+
+.tiny {
+  font-size: 14px;
+}
+
+.text-green {
+  color: #59d82f;
+}
+
+.bg-green-light {
+  background-color: #a9ff96;
+}
+
+.bg-red-light {
+  background-color: #ffd1d1;
+}

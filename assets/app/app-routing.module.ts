@@ -13,6 +13,7 @@ import { YourCourseComponent } from './dashboard/your-course/your-course.compone
 import { PurchaseHistoryComponent } from './dashboard/purchase-history/purchase-history.component';
 import { EditProfileComponent } from './dashboard/edit-profile/edit-profile.component';
 import { CreditCardInfoComponent } from './dashboard/credit-card-info/credit-card-info.component';
+import { YourQuestionComponent } from './dashboard/your-question/your-question.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './auth/auth-guard.service';
 import { AdminGuard } from './auth/admin-guard.service';
@@ -45,6 +46,7 @@ const appRoutes: Routes = [
     { path: 'purchase', component: PurchaseHistoryComponent },
     { path: 'edit', component: EditProfileComponent },
     { path: 'credit', component: CreditCardInfoComponent },
+    { path: 'questions', component: YourQuestionComponent },
   ] },
   { path: 'courses/:courseCode/parts/:partCode/videos/:videoCode', component: VideoComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminMainComponent, canActivate: [AuthGuard, AdminGuard], children: [

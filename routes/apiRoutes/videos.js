@@ -29,9 +29,9 @@ router.get("/:vidCode", async (req, res) => {
         .populate({
           path: "questions",
           populate: [
-            {path: "author", select: "username", model:"User"},
+            {path: "author", select: "username image", model:"User"},
             {path: "answers", select: "createdAt author body", model:"Answer",
-              populate: {path: "author", select: "username", model: "User"}
+              populate: {path: "author", select: "username image", model: "User"}
             }
           ]
         }).populate("resources").populate("part").exec();

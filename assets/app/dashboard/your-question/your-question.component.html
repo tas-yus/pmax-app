@@ -1,0 +1,67 @@
+<div class="container my-4">
+  <div class="text-center">
+    <h4>Questions</h4>
+    <hr>
+    <p>คำถามทั้งหมดของคุณ ({{questions.length}})</p>
+  </div>
+  <label>Filter By: </label>
+  <select (change)="onChangeFilter($event.target.value)" name="filter" #filter>
+    <option value="1">ทั้งหมด</option>
+    <option value="2">ตอบแล้ว</option>
+    <option value="3">ยังไม่ได้ตอบ</option>
+    <option value="4">ติดตาม</option>
+  </select>
+  <input id="checkbox" type="checkbox" (click)="preventCategoryChange = !preventCategoryChange; queryNewQuestion = true"> Stay on this page
+  <p class="pl-5 my-3" *ngIf="questions.length === 0">No questions. </p>
+  <div class="card {{question.code === questionCode? 'border border-primary': ''}}" *ngFor="let question of questions | orderBy: updatedAt: true | filterBy: userFilterArray; let i = index">
+    <div id="q{{question.code}}" class="{{question.isClosed? 'bg-green-light': 'bg-red-light'}}
+    card-header text-dark d-flex justify-content-between">
+      <h4>{{question.title}}
+        <i *ngIf="question.isClosed" class="fa fa-check-square-o" aria-hidden="true"></i>
+      </h4>
+      <a routerLink="/courses/{{question.video.course.code}}/parts/{{question.video.part.code}}/videos/{{question.video.code}}"
+      class="text-dark mt-1">
+        Go To Question
+      </a>
+    </div>
+    <div class="card-body">
+      <p>{{question.body}}</p>
+      <div *ngIf="question.answers.length !== 0" class="card-header font-weight-bold text-primary">
+        Answers
+      </div>
+      <div *ngIf="question.answers.length === 0" class="card-header font-weight-bold text-dark bg-warning">
+        No Answers
+      </div>
+      <div class="card-body pl-4 py-1 my-2 answer d-flex" *ngFor="let answer of question.answers">
+        <div>
+          <avatar [author]="answer.author"></avatar>
+          <p class="text-center text-muted"> {{answer.author.username}}
+            <i *ngIf="answer.author.isInstructor" class="fa fa-certificate text-warning" aria-hidden="true"></i>
+          </p>
+        </div>
+        <div style="width: 100%" class="d-flex flex-column">
+          <p class="pl-3 tiny">{{answer.body}}</p>
+        </div>
+      </div>
+      <div class="card-body pb-1">
+        <div class="text-right">
+          <a style="cursor:pointer" class="text-primary noselect" (click)="showReply[i] = !showReply[i]">
+            {{!showReply[i]? 'Reply' : 'Hide'}} <i class="fa fa-reply pl-2" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      <div class="reply mb-3">
+        <div class="container" *ngIf="showReply[i]">
+          <form (ngSubmit)="onReply(f, question.code, i)" #f="ngForm">
+            <div class="form-group">
+              <textarea class="form-control" type="text" name="answerBody" ngModel required></textarea>
+            </div>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-sm btn-primary" id="question-btn">Reply</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

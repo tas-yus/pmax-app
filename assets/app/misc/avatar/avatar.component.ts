@@ -12,6 +12,7 @@ export class AvatarComponent implements OnInit {
   @Input() user = null;
   @Input() course = null;
   @Input() part = null;
+  @Input() author = null;
   getInitials: Function = function(firstname: String, lastname: String) {
     return (firstname.substring(0,1) + lastname.substring(0,1)).toUpperCase();
   }

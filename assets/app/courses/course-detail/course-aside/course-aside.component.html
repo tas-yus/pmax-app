@@ -2,11 +2,20 @@
   <img class="card-img-top" src="/assets/images/{{course.image}}" alt="{{course.title}}">
   <div class="card-body">
     <h4 class="card-title">{{course.price}} Bahts</h4>
-    <ng-template [ngIf]="!alreadyAdded">
+    <ng-template [ngIf]="!authService.isAuthenticated()">
       <a (click)="onAddToCart(course._id, course.code, true)" class="btn btn-block btn-info text-light p-2">Buy Now</a>
       <a (click)="onAddToCart(course._id, course.code, false)" class="btn btn-block btn-default cart-btn p-2">Add To Cart</a>
     </ng-template>
-    <a routerLink="/cart" *ngIf="alreadyAdded" class="btn btn-block btn-info text-light p-2">Go To Cart</a>
+    <ng-template [ngIf]="authService.isAuthenticated()">
+      <ng-template [ngIf]="!authService.isAdmin() && !authService.isInstructor()">
+        <ng-template [ngIf]="!alreadyAdded">
+          <a (click)="onAddToCart(course._id, course.code, true)" class="btn btn-block btn-info text-light p-2">Buy Now</a>
+          <a (click)="onAddToCart(course._id, course.code, false)" class="btn btn-block btn-default cart-btn p-2">Add To Cart</a>
+        </ng-template>
+        <a routerLink="/cart" *ngIf="alreadyAdded" class="btn btn-block btn-info text-light p-2">Go To Cart</a>
+      </ng-template>
+    </ng-template>
+    <a routerLink="/courses/{{course.code}}/learn" *ngIf="authService.isAdmin() || authService.isInstructor()" class="btn btn-block btn-info text-light p-2">Go To Course</a>
     <div class="card-body">
         <h5>Includes :</h5>
         <p class="card-text"><i class="fa fa-file-video-o" aria-hidden="true"></i> ... hours on-demand video</p>

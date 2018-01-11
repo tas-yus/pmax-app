@@ -270,6 +270,40 @@ router.get("/search", (req, res) => {
   });
 });
 
-
+router.get("/questions", middleware.isLoggedIn, async (req, res) => {
+  var populateArray = [
+    {
+      path: "author",
+      select: "username image"
+    },
+    {
+      path: "answers",
+      select: "author body createdAt",
+      populate: {
+        path: "author",
+        select: "username image isInstructor"
+      }
+    },
+    {
+      path: "video",
+      select: "code part course",
+      populate: [
+        {
+          path: "part",
+          select: "code"
+        },
+        {
+          path: "course",
+          select: "code"
+        }
+      ]
+    }
+  ];
+  Question.find({}).populate(populateArray).then((questions) => {
+    res.status(200).send(questions);
+  }).catch((err) => {
+    res.status(400).send({err, message: "Something went wrong"});
+  })
+});
 
 module.exports = router;

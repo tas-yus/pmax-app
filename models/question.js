@@ -7,21 +7,25 @@ var QuestionSchema = new mongoose.Schema({
     body: String,
     code: Number,
     video: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Video"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Video"
     },
     author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
     },
     answers: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Answer",
-        default: []
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Answer",
+      default: []
     }],
     createdAt: {
-        type: Date,
-        default: Date.now
+      type: Date,
+      default: Date.now
+    },
+    isClosed: {
+      type: Boolean,
+      default: false
     }
 });
 

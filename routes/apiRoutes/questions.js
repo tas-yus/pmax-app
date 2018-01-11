@@ -15,16 +15,16 @@ var mongoose = require("mongoose");
 var async = require('async');
 
 // QUESTIONS
-router.get("/questions", async (req, res) => {
+router.get("/questions", middleware.isLoggedIn, async (req, res) => {
   var course = await Course.findOne({code: req.params.courseCode}).populate("questions").exec();
   var questions = await User.populate(course.questions, {path: "author", select: "username"});
   questions = await Answer.populate(questions, {path: "answers", select: "author body createdAt"});
-  questions = await User.populate(questions, {path: "answers.author", select: "username", model: User});
+  questions = await User.populate(questions, {path: "answers.author", select: "username image", model: User});
   res.status(400).send(questions);
 });
 
 // CREATE QUESTIONS
-router.post("/parts/:partCode/videos/:vidCode/questions", (req, res) => {
+router.post("/parts/:partCode/videos/:vidCode/questions", middleware.isLoggedIn, (req, res) => {
   var newQuestion = req.body;
   newQuestion.author = req.user._id;
   async.waterfall([
@@ -84,7 +84,12 @@ router.post("/parts/:partCode/videos/:vidCode/questions", (req, res) => {
     if (err) {
       return res.status(400).send({err, message: "Something went wrong"});
     }
-    res.status(201).send(question);
+    User.populate(question, {path: "author", select: "username image"}, (err, question) => {
+      if (err) {
+        return res.status(400).send({err, message: "Something went wrong"});
+      }
+      res.status(201).send(question);
+    });
   })
   // Video.findOne({code: req.params.vidCode}).then((foundVideo) => {
   //   newQuestion.video = video;

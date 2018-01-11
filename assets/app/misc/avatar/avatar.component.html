@@ -3,6 +3,9 @@
     {{user.image? '':getInitials(user.firstName,user.lastName)}}
   </div>
 </ng-template>
+<ng-template [ngIf]="author">
+  <div class="author-avatar" [style.background-image]="getUrl('style', author.image)"></div>
+</ng-template>
 <ng-template [ngIf]="course">
   <div class="course-avatar" [style.background-image]="getUrl('style', course.image)"></div>
 </ng-template>

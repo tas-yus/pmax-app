@@ -57,11 +57,10 @@
 <ng-template [ngIf]="questions.length !== 0">
   <div class="questions">
     <div class="my-3" *ngFor="let question of questions | orderBy: createdAt: true; let i = index">
+      {{question.createdAt}}
       <div class="card">
         <div class="card-header d-flex align-items-center">
-          <div style="flex-grow: 0; width: 40px"class="avatar mr-2">
-            TY
-          </div>
+          <avatar [author]="question.author"></avatar>
           <div class="d-flex flex-column ml-2">
             <h5 class="question-title">
               {{question.title}}
@@ -95,8 +94,7 @@
           <div *ngIf="question.answers.length !== 0" class="answers px-2">
             <hr>
             <div class="ml-4 d-flex align-items-center" *ngFor="let answer of question.answers | orderBy: createdAt: true">
-              <div style="flex-grow: 0; width: 40px; background: url('https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/00/005ce9622f98deadcb61ad1a33ceaed22ce12571.jpg')"class="avatar mr-2">
-              </div>
+              <avatar [author]="question.author"></avatar>
               <div style="flex-grow: 2; width: 250px" class="card-header bg-light py-1 my-2">
                 <p class="answer-body pt-2">{{answer.body}}</p>
                 <footer class="blockquote-footer text-right question-date">{{answer.author.username}} ({{getDate(answer.createdAt)}})</footer>

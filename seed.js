@@ -345,6 +345,7 @@ var user = [
     {
         username: "tas",
         isAdmin: true,
+        isInstructor: true,
         firstName: 'Tas',
         lastName: 'Yusoontorn',
         image: 'logo.png'
@@ -449,7 +450,7 @@ var user = [
 
 var questions = [{
         title: "What's the difference between Oxidation State and Charge?",
-        body: "It seems to me that they are the same. However, they are not! Could you please explain in detials why this is the case?",
+        body: "It seems to me that they are the same. However, they are not! Could you please explain in details why this is the case?",
     },
     {
         title: "When do we use delta and when do we use differential sign?",
@@ -528,22 +529,22 @@ function seedDB() {
     Question.remove({}, (err) => {
        if (err) return console.log(err);
        console.log("Questions Removed");
-       questions.forEach((q) => {
-          Question.create(q, (err) => {
-              if (err) return console.log(err);
-              console.log("Questions Added");
-          })
-       });
+      //  questions.forEach((q) => {
+      //     Question.create(q, (err) => {
+      //         if (err) return console.log(err);
+      //         console.log("Questions Added");
+      //     })
+      //  });
     });
     Answer.remove({}, (err) => {
        if (err) return console.log(err);
        console.log("Answers Removed");
-       answers.forEach((ans) => {
-          Answer.create(ans, (err) => {
-            if (err) return console.log(err);
-            console.log("Answers Added");
-          });
-       });
+      //  answers.forEach((ans) => {
+      //     Answer.create(ans, (err) => {
+      //       if (err) return console.log(err);
+      //       console.log("Answers Added");
+      //     });
+      //  });
     });
     Order.remove({}, (err) => {
        if (err) return console.log(err);

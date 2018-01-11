@@ -95,7 +95,15 @@ var UserSchema = new mongoose.Schema({
         }
     ],
     image: String,
+    isMaster: {
+        type: Boolean,
+        default: false
+    },
     isAdmin: {
+        type: Boolean,
+        default: false
+    },
+    isInstructor: {
         type: Boolean,
         default: false
     },

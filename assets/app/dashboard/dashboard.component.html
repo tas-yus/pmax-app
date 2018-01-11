@@ -6,19 +6,23 @@
           <div class="d-flex justify-content-center">
             <avatar [user]=user></avatar>
           </div>
-          <h5 class="mt-2 text-center">{{user.firstName}} {{user.lastName}}</h5>
+          <h5 class="mt-2 text-center">{{user.firstName}} {{user.lastName}}
+            <i class="fa fa-key icon" *ngIf="user.isAdmin" aria-hidden="true"></i>
+            <i class="fa fa-graduation-cap icon" *ngIf="user.isInstructor" aria-hidden="true"></i>
+          </h5>
           <hr>
           <ul class="pl-0 text-center" style="list-style:none;">
-            <ng-template [ngIf]="!user.isAdmin">
+            <ng-template [ngIf]="!user.isAdmin && !user.isInstructor">
               <a routerLink="/dashboard"><li>Your Courses</li></a>
               <a routerLink="/dashboard/edit"><li>Edit Profile</li></a>
               <a routerLink="/dashboard/credit"><li>Credit Card Info</li></a>
               <a routerLink="/dashboard/purchase"><li>Purchase History</li></a>
+              <a routerLink="/dashboard/questions"><li>Your Questions</li></a>
             </ng-template>
-            <!-- <ng-template [ngIf]="user.isAdmin">
+            <ng-template [ngIf]="user.isInstructor">
               <a routerLink="/dashboard/edit"><li>Edit Profile</li></a>
-              <a routerLink="/dashboard"><li>Your Questions</li></a>
-            </ng-template> -->
+              <a routerLink="/dashboard/questions"><li>Your Questions</li></a>
+            </ng-template>
           </ul>
         </div>
       </ng-template>

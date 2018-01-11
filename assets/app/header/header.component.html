@@ -20,7 +20,7 @@
             <a class="nav-link" *ngIf="currentUser" routerLink="/dashboard">Signed in as {{currentUser.username}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/cart">Your Cart</a>
+            <a class="nav-link" *ngIf="!authService.isInstructor() && !authService.isAdmin()" routerLink="/cart">Your Cart</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" style="cursor: pointer" (click)="onLogoutUser()">Logout</a>
