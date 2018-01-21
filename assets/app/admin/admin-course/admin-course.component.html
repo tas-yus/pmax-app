@@ -1,3 +1,7 @@
+<div class="d-flex justify-content-start">
+  <button routerLink="/admin/courses/new"
+  class="btn btn-info">Add Course <i class="fa fa-plus" aria-hidden="true"></i></button>
+</div>
 <div class="card my-2" *ngFor="let course of courses; let i = index">
   <div class="card-header text-white bg-dark d-flex justify-content-between">
     <a class="text-white" style="text-decoration:none;" routerLink="/admin/courses/{{course._id}}">
@@ -11,12 +15,11 @@
   <div class="card-body">
     <p><span class="text-primary font-weight-bold">Price: </span>{{course.price}} บาท</p>
     <p><span class="text-primary font-weight-bold">Description: </span>{{course.description}}</p>
-    <button class="btn btn-sm btn-primary" *ngIf="!showParts[i].show" (click)="showParts[i].show = !showParts[i].show">
-      Show Parts <i class="fa fa-folder-open" aria-hidden="true"></i>
+    <button class="btn btn-sm btn-primary" (click)="showParts[i].show = !showParts[i].show">
+      {{showParts[i].show? 'Hide': 'Show'}} Parts <i class="fa fa-folder-open" aria-hidden="true"></i>
     </button>
-    <button class="btn btn-sm btn-primary" *ngIf="showParts[i].show" (click)="showParts[i].show = !showParts[i].show">
-      Hide Parts <i class="fa fa-folder-open" aria-hidden="true"></i>
-    </button>
+    <button routerLink="/admin/courses/{{course._id}}/parts/new" class="btn btn-sm btn-warning"
+    *ngIf="showParts[i].show">Add Part <i class="fa fa-plus" aria-hidden="true"></i></button>
   </div>
   <div *ngIf="showParts[i].show">
     <div class="pl-4" *ngFor="let part of course.parts; let j = index">
@@ -28,14 +31,11 @@
       </div>
       <div class="card-body">
         <p>{{part.description}}</p>
-        <button class="btn btn-sm btn-primary" *ngIf="!showParts[i].parts[j]"
-        (click)="showParts[i].parts[j] = !showParts[i].parts[j]">
-          Show Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
+        <button class="btn btn-sm btn-primary" (click)="showParts[i].parts[j] = !showParts[i].parts[j]">
+          {{!showParts[i].parts[j]? 'Show' : 'Hide'}} Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
         </button>
-        <button class="btn btn-sm btn-primary" *ngIf="showParts[i].parts[j]"
-        (click)="showParts[i].parts[j] = !showParts[i].parts[j]">
-          Hide Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
-        </button>
+        <button routerLink="/admin/courses/{{course._id}}/parts/{{part._id}}/videos/new"
+        class="btn btn-sm btn-success" *ngIf="showParts[i].parts[j]">Add Video <i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
       <div *ngIf="showParts[i].parts[j]">
         <div class="pl-4" *ngFor="let video of part.videos; let k = index">

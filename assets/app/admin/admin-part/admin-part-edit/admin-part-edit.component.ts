@@ -38,7 +38,11 @@ export class AdminPartEditComponent implements OnInit {
   }
 
   toggleSelect(i) {
+    this.file = null;
     var current = this.selectImages[i];
+    if (current) {
+      this.selectedImage = null;
+    }
     this.selectImages = [];
     this.selectImages[i] = !current;
   }
@@ -47,6 +51,7 @@ export class AdminPartEditComponent implements OnInit {
     this.errMessage = null;
     this.file = event.srcElement.files[0];
     this.selectImages = [];
+    this.selectedImage = null;
     if (!this.isValid(this.file)) {
       this.fileUpload.nativeElement.value = "";
       this.errMessage = "Not Valid";

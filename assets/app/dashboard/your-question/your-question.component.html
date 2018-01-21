@@ -20,16 +20,17 @@
         <i *ngIf="question.isClosed" class="fa fa-check-square-o" aria-hidden="true"></i>
       </h4>
       <a routerLink="/courses/{{question.video.course.code}}/parts/{{question.video.part.code}}/videos/{{question.video.code}}"
-      class="text-dark mt-1">
+      class="text-dark mt-1 pr-2">
         Go To Question
       </a>
     </div>
     <div class="card-body">
       <p>{{question.body}}</p>
+      <i *ngIf="authService.isAdmin()" style="position: absolute; top: 5px; right: 5px;"  (click)="onDeleteQuestion(question.video.course.code, question.video.code, question.code)" class="fa fa-times" aria-hidden="true"></i>
       <div *ngIf="question.answers.length !== 0" class="card-header font-weight-bold text-primary">
         Answers
       </div>
-      <div *ngIf="question.answers.length === 0" class="card-header font-weight-bold text-dark bg-warning">
+      <div *ngIf="question.answers.length === 0" class="card-header font-weight-bold text-primary">
         No Answers
       </div>
       <div class="card-body pl-4 py-1 my-2 answer d-flex" *ngFor="let answer of question.answers">

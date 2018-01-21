@@ -57,4 +57,8 @@ export class AuthService {
       return JSON.parse(sessionStorage.getItem('currentUser')).isInstructor;
     }
   }
+
+  getCurrentUser() {
+    return JSON.parse(sessionStorage.getItem('currentUser'));
+  }
 }

@@ -4,14 +4,16 @@ import { NgForm } from '@angular/forms';
 import { AdminService } from './../../admin.service';
 
 @Component({
-  selector: 'admin-video-edit',
-  templateUrl: './admin-video-edit.component.html',
-  styleUrls: ['./admin-video-edit.component.css'],
+  selector: 'admin-video-new',
+  templateUrl: './admin-video-new.component.html',
+  styleUrls: ['./admin-video-new.component.css'],
   providers: [AdminService]
 })
 
-export class AdminVideoEditComponent implements OnInit {
+export class AdminVideoNewComponent implements OnInit {
   @ViewChild('fileUpload') fileUpload;
+  courseTitle = null;
+  partTitle = null;
   video = null;
   videos = [];
   selectedVideo = null;
@@ -24,8 +26,12 @@ export class AdminVideoEditComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(params => {
       const id = this.route.snapshot.params['id'];
-      this.adminService.getVideo(id, (video) => {
-        this.video = video;
+      const partId = this.route.snapshot.params['partId'];
+      this.adminService.getCourse(id, (course) => {
+        this.courseTitle = course.title;
+      });
+      this.adminService.getPart(partId, (part) => {
+        this.partTitle = part.title;
       });
       this.adminService.listVideos((videos) => {
         this.videos = videos;
@@ -75,22 +81,25 @@ export class AdminVideoEditComponent implements OnInit {
     return true;
   }
 
-  onEditVideo(form: NgForm) {
+  onAddVideo(form: NgForm) {
     const id = this.route.snapshot.params['id'];
+    const partId = this.route.snapshot.params['partId'];
     const body: any = {
       title: form.value.title,
+      course: id,
+      part: partId,
     };
     if (this.file) {
       this.adminService.uploadVideo(this.file, (response) => {
         body.path = response.filename;
-        this.adminService.updateVideo(id, body, () => {
-          this.router.navigate([`/admin/videos/${id}`]);
+        this.adminService.addVideo(body, (videoId) => {
+          this.router.navigate([`/admin/videos/${videoId}`]);
         });
       });
     } else {
       body.path = this.selectedVideo? this.selectedVideo: this.video.path;
-      this.adminService.updateVideo(id, body, () => {
-        this.router.navigate([`/admin/videos/${id}`]);
+      this.adminService.addVideo(body, (videoId) => {
+        this.router.navigate([`/admin/videos/${videoId}`]);
       });
     }
   }

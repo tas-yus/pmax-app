@@ -43,6 +43,14 @@ export class AdminService {
     });
   }
 
+  addCourse(body, callback) {
+    this.http.post<any>('/api/admin/courses', body).subscribe((data) => {
+      callback(data.courseId);
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
   // XXX PARTS XXX
 
   getParts(callback) {
@@ -61,9 +69,25 @@ export class AdminService {
     });
   }
 
+  getPartsInCourse(courseId, callback) {
+    this.http.get<any>(`/api/admin/courses/${courseId}/parts`).subscribe((parts) => {
+      callback(parts)
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
   updatePart(id, body, callback) {
     this.http.put(`/api/admin/parts/${id}`, body).subscribe(() => {
       callback();
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  addPart(body, callback) {
+    this.http.post<any>(`/api/admin/parts`, body).subscribe((data) => {
+      callback(data.partId);
     }, (err) => {
       console.log(err);
     });
@@ -74,6 +98,14 @@ export class AdminService {
   getVideos(callback) {
     this.http.get<any[]>('/api/admin/videos').subscribe((videos) => {
       callback(videos);
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  addVideo(body, callback) {
+    this.http.post<any>(`/api/admin/videos`, body).subscribe((data) => {
+      callback(data.videoId);
     }, (err) => {
       console.log(err);
     });
@@ -101,6 +133,16 @@ export class AdminService {
     }, (err) => {
       console.log(err);
     })
+  }
+
+  uploadVideo(file, callback) {
+    const formData: any = new FormData();
+    formData.append("file", file);
+    this.http.post<any>('/api/admin/videos/upload', formData).subscribe((data) =>{
+      callback(data);
+    }, (err) => {
+      console.log(err);
+    });
   }
 
   // XXX USERS XXX

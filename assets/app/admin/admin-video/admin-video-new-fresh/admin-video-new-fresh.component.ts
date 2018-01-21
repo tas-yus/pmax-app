@@ -3,29 +3,35 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { AdminService } from './../../admin.service';
 
+declare var $:any;
+
 @Component({
-  selector: 'admin-video-edit',
-  templateUrl: './admin-video-edit.component.html',
-  styleUrls: ['./admin-video-edit.component.css'],
+  selector: 'admin-video-new-fresh',
+  templateUrl: './admin-video-new-fresh.component.html',
+  styleUrls: ['./admin-video-new-fresh.component.css'],
   providers: [AdminService]
 })
 
-export class AdminVideoEditComponent implements OnInit {
+export class AdminVideoNewFreshComponent implements OnInit {
   @ViewChild('fileUpload') fileUpload;
+  @ViewChild('courseSelect') courseSelect;
+  @ViewChild('partSelect') partSelect;
   video = null;
   videos = [];
+  courses = [];
+  parts = [];
   selectedVideo = null;
   file: File = null;
   selectVideos = [];
   showVideos = [];
   errMessage = null;
+  showParts = false;
   constructor(private route: ActivatedRoute, private router: Router, private adminService: AdminService) { }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      const id = this.route.snapshot.params['id'];
-      this.adminService.getVideo(id, (video) => {
-        this.video = video;
+      this.adminService.getCourses("", (courses) => {
+        this.courses = courses;
       });
       this.adminService.listVideos((videos) => {
         this.videos = videos;
@@ -71,26 +77,38 @@ export class AdminVideoEditComponent implements OnInit {
     }
   }
 
+  onSelectCourse(value) {
+    if (value !== '') {
+      this.adminService.getPartsInCourse(value, (parts) => {
+        this.parts = parts;
+        this.showParts = true;
+      });
+    } else {
+      this.showParts = false;
+    }
+  }
+
   isValid(file) {
     return true;
   }
 
-  onEditVideo(form: NgForm) {
-    const id = this.route.snapshot.params['id'];
+  onAddVideo(form: NgForm) {
     const body: any = {
       title: form.value.title,
+      course: this.courseSelect.value,
+      part: this.partSelect.value,
     };
     if (this.file) {
       this.adminService.uploadVideo(this.file, (response) => {
         body.path = response.filename;
-        this.adminService.updateVideo(id, body, () => {
-          this.router.navigate([`/admin/videos/${id}`]);
+        this.adminService.addVideo(body, (videoId) => {
+          this.router.navigate([`/admin/videos/${videoId}`]);
         });
       });
     } else {
       body.path = this.selectedVideo? this.selectedVideo: this.video.path;
-      this.adminService.updateVideo(id, body, () => {
-        this.router.navigate([`/admin/videos/${id}`]);
+      this.adminService.addVideo(body, (videoId) => {
+        this.router.navigate([`/admin/videos/${videoId}`]);
       });
     }
   }

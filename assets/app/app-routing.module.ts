@@ -30,6 +30,11 @@ import { AdminCourseEditComponent } from './admin/admin-course/admin-course-edit
 import { AdminPartEditComponent } from './admin/admin-part/admin-part-edit/admin-part-edit.component';
 import { AdminVideoEditComponent } from './admin/admin-video/admin-video-edit/admin-video-edit.component';
 import { AdminUserEditComponent } from './admin/admin-user/admin-user-edit/admin-user-edit.component';
+import { AdminCourseNewComponent } from './admin/admin-course/admin-course-new/admin-course-new.component';
+import { AdminPartNewComponent } from './admin/admin-part/admin-part-new/admin-part-new.component';
+import { AdminPartNewFreshComponent } from './admin/admin-part/admin-part-new-fresh/admin-part-new-fresh.component';
+import { AdminVideoNewComponent } from './admin/admin-video/admin-video-new/admin-video-new.component';
+import { AdminVideoNewFreshComponent } from './admin/admin-video/admin-video-new-fresh/admin-video-new-fresh.component';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'courses', pathMatch: 'full' },
@@ -51,12 +56,17 @@ const appRoutes: Routes = [
   { path: 'courses/:courseCode/parts/:partCode/videos/:videoCode', component: VideoComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: AdminMainComponent, canActivate: [AuthGuard, AdminGuard], children: [
     { path: 'courses', component: AdminCourseComponent },
+    { path: 'courses/new', component: AdminCourseNewComponent },
     { path: 'courses/:id', component: AdminCourseDetailComponent },
     { path: 'courses/:id/edit', component: AdminCourseEditComponent },
+    { path: 'courses/:id/parts/new', component: AdminPartNewComponent },
+    { path: 'courses/:id/parts/:partId/videos/new', component: AdminVideoNewComponent },
     { path: 'parts', component: AdminPartComponent },
+    { path: 'parts/new', component: AdminPartNewFreshComponent },
     { path: 'parts/:id', component: AdminPartDetailComponent },
     { path: 'parts/:id/edit', component: AdminPartEditComponent },
     { path: 'videos', component: AdminVideoComponent },
+    { path: 'videos/new', component: AdminVideoNewFreshComponent },
     { path: 'videos/:id', component: AdminVideoDetailComponent },
     { path: 'videos/:id/edit', component: AdminVideoEditComponent },
     { path: 'users', component: AdminUserComponent },

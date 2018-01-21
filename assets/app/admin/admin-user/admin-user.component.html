@@ -1,3 +1,6 @@
+<div class="d-flex justify-content-start">
+  <button class="btn btn-info">Register User <i class="fa fa-plus" aria-hidden="true"></i></button>
+</div>
 <div class="card my-2" *ngFor="let user of users; let i = index">
   <div class="card-header text-white bg-dark d-flex justify-content-between">
     <a class="text-white" style="text-decoration:none;" routerLink="/admin/users/{{user._id}}">

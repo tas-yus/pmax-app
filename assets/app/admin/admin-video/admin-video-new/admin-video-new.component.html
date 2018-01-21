@@ -1,0 +1,40 @@
+<div *ngIf="partTitle && courseTitle">
+  <h4 class="mb-4">Add Video in <span class="text-danger">{{partTitle}},</span> <span class="text-primary">{{courseTitle}}</span></h4>
+  <form (ngSubmit)="onAddVideo(f)" #f="ngForm">
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Title: </label>
+      <div class="col-sm-9">
+        <input class="form-control" type="text" name="title" placeholder="ชื่อวีดีโอ" ngModel required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-3 col-form-label">Upload Video: </label>
+      <div class="col-sm-9">
+        <input class="form-control-file" (change)="onChange($event, file)" type="file" name="video" #fileUpload ngModel>
+        <span class="invalid-feedback" *ngIf="errMessage">
+          *Please upload file no bigger than 2Gb with .mp4 or .avi extension
+        </span>
+      </div>
+    </div>
+    <!-- <div class="form-group row">
+      <label class="col-sm-3 col-form-label">File Name (opt.): </label>
+      <div class="col-sm-9">
+        <input class="form-control" #fileName="ngModel" type="text" name="fileName" placeholder="file name (no extension)" ngModel>
+      </div>
+    </div> -->
+    <label>Old Videos: </label>
+    <div class="form group list-group my-3">
+      <div (click)="selectVideo($event, vid); toggleSelect($event, i)" *ngFor="let vid of videos; let i = index" class="list-group-item d-flex flex-column">
+        <div class="d-flex flex-row justify-content-between">
+          <div>{{vid}}</div>
+          <a (click)="toggleShow($event, i)" class="btn btn-sm btn-primary text-white">Preview</a>
+        </div>
+        <div *ngIf="showVideos[i]" class="col-md-3 col-sm-6 my-3">
+          <video style="width:100%" src="/assets/videos/{{vid}}"  controls autoplay></video>
+        </div>
+        <i class="fa check-on-image {{selectVideos[i]? 'fa-check-circle-o': ''}}" aria-hidden="true"></i>
+      </div>
+    </div>
+    <button [disabled]="!f.form.valid || (!file && !selectedVideo)" class="btn btn-primary pull-right">Add</button>
+  </form>
+</div>

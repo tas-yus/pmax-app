@@ -14,12 +14,11 @@
         </a>
         <p><span span class="text-primary font-weight-bold">Description: </span> {{part.description}}</p>      </div>
     </div>
-    <button class="btn btn-sm btn-primary" *ngIf="!showParts" (click)="showParts = !showParts">
-      Show Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
+    <button class="btn btn-sm btn-primary" (click)="showParts = !showParts">
+      {{!showParts? 'Show': 'Hide'}} Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
     </button>
-    <button class="btn btn-sm btn-primary" *ngIf="showParts" (click)="showParts = !showParts">
-      Hide Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
-    </button>
+    <button class="btn btn-sm btn-success" routerLink="/admin/courses/{{part.course._id}}/parts/{{part._id}}/videos/new"
+    *ngIf="showParts">Add Video <i class="fa fa-plus" aria-hidden="true"></i></button>
   </div>
   <div *ngIf="showParts">
     <div class="pl-4" *ngFor="let video of part.videos; let k = index">

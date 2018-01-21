@@ -41,11 +41,18 @@ import { AdminCourseEditComponent } from './admin/admin-course/admin-course-edit
 import { AdminPartEditComponent } from './admin/admin-part/admin-part-edit/admin-part-edit.component';
 import { AdminVideoEditComponent } from './admin/admin-video/admin-video-edit/admin-video-edit.component';
 import { AdminUserEditComponent } from './admin/admin-user/admin-user-edit/admin-user-edit.component';
+import { AdminCourseNewComponent } from './admin/admin-course/admin-course-new/admin-course-new.component';
+import { AdminPartNewComponent } from './admin/admin-part/admin-part-new/admin-part-new.component';
+import { AdminPartNewFreshComponent } from './admin/admin-part/admin-part-new-fresh/admin-part-new-fresh.component';
+import { AdminVideoNewComponent } from './admin/admin-video/admin-video-new/admin-video-new.component';
+import { AdminVideoNewFreshComponent } from './admin/admin-video/admin-video-new-fresh/admin-video-new-fresh.component';
+
 import { AvatarComponent } from './misc/avatar/avatar.component';
 
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from './auth/auth-guard.service';
 import { AdminGuard } from './auth/admin-guard.service';
+
 
 @NgModule({
   declarations: [
@@ -76,12 +83,17 @@ import { AdminGuard } from './auth/admin-guard.service';
     AdminCourseComponent,
     AdminCourseDetailComponent,
     AdminCourseEditComponent,
+    AdminCourseNewComponent,
     AdminPartComponent,
     AdminPartDetailComponent,
     AdminPartEditComponent,
+    AdminPartNewComponent,
+    AdminPartNewFreshComponent,
     AdminVideoComponent,
     AdminVideoDetailComponent,
     AdminVideoEditComponent,
+    AdminVideoNewComponent,
+    AdminVideoNewFreshComponent,
     AdminUserComponent,
     AdminUserDetailComponent,
     AdminUserEditComponent

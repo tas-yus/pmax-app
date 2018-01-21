@@ -59,6 +59,23 @@ router.get("/courses", (req, res) => {
   });
 });
 
+router.post("/courses", (req, res) => {
+  var course = new Course({
+    title: req.body.title,
+    code: method.createCode(req.body.title),
+    price: req.body.price,
+    description: req.body.description,
+    video: req.body.video,
+    image: req.body.image
+  });
+  course.save().then((course) => {
+    res.status(200).send({courseId: course._id});
+  }).catch((err) => {
+    console.log(err);
+    res.status(400).send({err, message: "Something went wrong"});
+  });
+});
+
 router.get("/courses/:id", (req, res) => {
   Course.findById(req.params.id).populate({path:"parts", model: "Part", populate: {path: "videos", model: "Video"}}).exec((err, course) => {
     if (err) {
@@ -86,6 +103,14 @@ router.put("/courses/:id", (req, res) => {
   });
 });
 
+router.get("/courses/:id/parts", (req, res) => {
+  Part.find({course: req.params.id}).then((parts) => {
+    res.status(200).send(parts);
+  }).catch((err) => {
+    res.status(400).send({err, message: "Something went wrong"});
+  });
+});
+
 // ALL PARTS
 router.get("/parts", (req, res) => {
   var sort = req.query.sort;
@@ -106,6 +131,29 @@ router.get("/parts", (req, res) => {
     } else {
       res.status(200).send(parts);
     }
+  });
+});
+
+router.post("/parts", (req, res) => {
+  var partId = null;
+  var part = new Part({
+    title: req.body.title,
+    code: method.createCode(req.body.title),
+    course: req.body.course,
+    description: req.body.description,
+    image: req.body.image
+  });
+  part.save().then((part) => {
+    partId = part._id;
+    return Course.findById(part.course);
+  }).then((course) => {
+    course.parts.push(partId);
+    return course.save();
+  }).then(() => {
+    res.status(200).send({partId});
+  }).catch((err) => {
+    console.log(err);
+    res.status(400).send({err, message: "Something went wrong"});
   });
 });
 
@@ -157,6 +205,48 @@ router.get("/videos", (req, res) => {
   });
 });
 
+// XXX XXX XXX XXX Update User aswell.
+router.post("/videos", (req, res) => {
+  var videoId = null;
+  var video = new Video({
+    title: req.body.title,
+    course: req.body.course,
+    part: req.body.part,
+    path: req.body.path
+  });
+  video.save().then((video) => {
+    videoId = video._id;
+    return User.find({courses: mongoose.Types.ObjectId(req.body.course)});
+  }).then((users) => {
+    return new Promise(function(resolve, reject) {
+      async.forEach(users, (user, callback) => {
+        user.videos.push({video: videoId});
+        user.save((err) => {
+          if (err) {
+            return reject(err);
+          }
+          callback();
+        })
+      }, (err) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve();
+      });
+    });
+  }).then(() => {
+    return Part.findById(req.body.part);
+  }).then((part) => {
+    part.videos.push(videoId);
+    return part.save();
+  }).then(() => {
+    res.status(200).send({videoId});
+  }).catch((err) => {
+    console.log(err);
+    res.status(400).send({err, message: "Something went wrong"});
+  });
+});
+
 router.get("/videos/list", (req, res) => {
   fs.readdir(__dirname + config.videoApiPath, (err, videoPaths) => {
     if (err) {
@@ -164,6 +254,39 @@ router.get("/videos/list", (req, res) => {
       return res.status(400).send({err, message: "Something went wrong"});
     }
     res.status(200).send(videoPaths);
+  });
+});
+
+// CREATE COURSE
+router.post("/videos/upload", middleware.isLoggedIn, middleware.isAdmin, (req, res) => {
+  processFormBody(req, res, function (err) {
+    if (err) {
+      console.log(err);
+      return res.status(400).send({err, message: "Something went wrong"});
+    }
+    if (!req.file) {
+      return res.status(400).send({message: "No file received"});
+    }
+    // request.file has the following properties of interest
+    //      fieldname      - Should be 'uploadedphoto' since that is what we sent
+    //      originalname:  - The name of the file the user uploaded
+    //      mimetype:      - The mimetype of the image (e.g. 'image/jpeg',  'image/png')
+    //      buffer:        - A node Buffer containing the contents of the file
+    //      size:          - The size of the file in bytes
+    if (req.file.size >= 3*1024*1024*1024) {
+      return res.status(400).send("File too large");
+    }
+    // We need to create the file in the directory "images" under an unique name. We make
+    // the original file name unique by adding a unique prefix with a timestamp.
+    var timestamp = new Date().valueOf();
+    var filename = 'U' +  String(timestamp) + req.file.originalname;
+    fs.writeFile(__dirname + config.videoApiPath + filename, req.file.buffer, function (err) {
+      if (err) {
+        console.log(err);
+        return res.status(400).send({err, message: "Something went wrong"});
+      }
+      res.status(200).send({message: "File Uploaded!", filename});
+    });
   });
 });
 
@@ -268,42 +391,6 @@ router.get("/search", (req, res) => {
   }).catch((err) => {
     return res.status(400).send({err, message: "Something went wrong"});
   });
-});
-
-router.get("/questions", middleware.isLoggedIn, async (req, res) => {
-  var populateArray = [
-    {
-      path: "author",
-      select: "username image"
-    },
-    {
-      path: "answers",
-      select: "author body createdAt",
-      populate: {
-        path: "author",
-        select: "username image isInstructor"
-      }
-    },
-    {
-      path: "video",
-      select: "code part course",
-      populate: [
-        {
-          path: "part",
-          select: "code"
-        },
-        {
-          path: "course",
-          select: "code"
-        }
-      ]
-    }
-  ];
-  Question.find({}).populate(populateArray).then((questions) => {
-    res.status(200).send(questions);
-  }).catch((err) => {
-    res.status(400).send({err, message: "Something went wrong"});
-  })
 });
 
 module.exports = router;

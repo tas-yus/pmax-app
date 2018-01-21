@@ -13,12 +13,11 @@
         <p><span class="text-primary font-weight-bold">Description: </span> {{course.description}}</p>
       </div>
     </div>
-    <button class="btn btn-sm btn-primary" *ngIf="!showParts.show" (click)="showParts.show = !showParts.show">
-      Show Parts <i class="fa fa-folder-open" aria-hidden="true"></i>
+    <button class="btn btn-sm btn-primary" (click)="showParts.show = !showParts.show">
+      {{!showParts.show? 'Show':'Hide'}} Parts <i class="fa fa-folder-open" aria-hidden="true"></i>
     </button>
-    <button class="btn btn-sm btn-primary" *ngIf="showParts.show" (click)="showParts.show = !showParts.show">
-      Hide Parts <i class="fa fa-folder-open" aria-hidden="true"></i>
-    </button>
+    <button class="btn btn-sm btn-warning" routerLink="/admin/courses/{{course._id}}/parts/new"
+    *ngIf="showParts.show">Add Part <i class="fa fa-plus" aria-hidden="true"></i></button>
   </div>
   <div *ngIf="showParts.show">
     <div class="pl-4" *ngFor="let part of course.parts; let j = index">
@@ -30,14 +29,11 @@
       </div>
       <div class="card-body">
         <p>{{part.description}}</p>
-        <button class="btn btn-sm btn-primary" *ngIf="!showParts.parts[j]"
-        (click)="showParts.parts[j] = !showParts.parts[j]">
-          Show Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
+        <button class="btn btn-sm btn-primary" (click)="showParts.parts[j] = !showParts.parts[j]">
+          {{!showParts.parts[j]? 'Show':'Hide'}} Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
         </button>
-        <button class="btn btn-sm btn-primary" *ngIf="showParts.parts[j]"
-        (click)="showParts.parts[j] = !showParts.parts[j]">
-          Hide Videos <i class="fa fa-video-camera" aria-hidden="true"></i>
-        </button>
+        <button routerLink="/admin/courses/{{course._id}}/parts/{{part._id}}/videos/new"
+        class="btn btn-sm btn-success" *ngIf="showParts.parts[j]">Add Video <i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
       <div *ngIf="showParts.parts[j]">
         <div class="pl-4" *ngFor="let video of part.videos; let k = index">
